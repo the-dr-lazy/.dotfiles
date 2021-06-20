@@ -78,9 +78,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Modeline
 
-;; (use-package doom-modeline
-;;   :ensure t
-;;   :hook (window-setup-hook . doom-modeline-mode))
 (add-hook! 'window-setup-hook doom-modeline-mode)
 
 (after! doom-modeline
