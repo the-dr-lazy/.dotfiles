@@ -2,8 +2,9 @@
 
 (use-package! purescript-mode
   :config
-  (set-ligatures! 'haskell-mode
+  (set-ligatures! 'purescript-mode
     ;; Functional
+    :delta "delta"
     :left-composition "<<<"
     :right-composition ">>>"
     ;; Logical

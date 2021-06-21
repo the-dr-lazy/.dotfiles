@@ -8,6 +8,7 @@
   :config
   (set-ligatures! 'haskell-mode
     ;; Functional
+    :delta "delta"
     :left-composition "<<<"
     :right-composition ">>>"
     ;; Logical
