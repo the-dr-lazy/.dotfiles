@@ -9,7 +9,7 @@
 ;; These are used for a number of things, particularly for GPG configuration,
 ;; some email clients, file templates and snippets.
 (setq user-full-name "Mohammad Hasani"
-      user-mail-address "thebrodmann@protonmail.com")
+      user-mail-address "the-dr-lazy@pm.me")
 
 ;; If you intend to use org, it is recommended you change this!
 (setq org-directory "~/org/")
