@@ -5,6 +5,7 @@
   (set-ligatures! 'purescript-mode
     ;; Functional
     :delta "delta"
+    :lambda "\\"
     :left-composition "<<<"
     :right-composition ">>>"
     ;; Logical
