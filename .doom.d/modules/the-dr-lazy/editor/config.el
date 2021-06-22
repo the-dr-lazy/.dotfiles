@@ -34,3 +34,6 @@
 
 (setq evil-move-cursor-back nil
       evil-move-beyond-eol t)
+
+(auto-save-visited-mode 1)
+(global-auto-revert-mode t)
