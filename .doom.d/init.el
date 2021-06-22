@@ -190,6 +190,7 @@
        ui
        editor
        tools
+       pdf
        haskell
        purescript
        javascript
