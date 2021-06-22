@@ -132,3 +132,5 @@
         lsp-ui-doc-max-height 8
         lsp-ui-doc-border "#ffffff")
   (set-face-background 'lsp-ui-doc-background "#191b2e"))
+
+(setq +lookup-open-url-fn #'+lookup-xwidget-webkit-open-url-fn)
