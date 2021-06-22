@@ -1,5 +1,8 @@
 ;;; the-dr-lazy/purescript/config.el -*- lexical-binding: t; -*-
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Major Mode
+
 (use-package! purescript-mode
   :config
   (set-ligatures! 'purescript-mode
