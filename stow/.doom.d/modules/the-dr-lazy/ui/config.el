@@ -71,9 +71,10 @@
         doom-themes-enable-italic t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Splash Screen
+;; Dashboard 
 
-(setq! fancy-splash-image (concat doom-private-dir "modules/the-dr-lazy/ui/media/gnu.png"))
+(setq +doom-dashboard-functions '(doom-dashboard-widget-banner))
+(setq fancy-splash-image (concat doom-private-dir "modules/the-dr-lazy/ui/media/gnu.png"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Modeline
