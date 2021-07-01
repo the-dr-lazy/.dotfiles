@@ -35,12 +35,15 @@
         :delta "∆"
         :left-composition "ᗕ"
         :right-composition "ᗒ"
+        :function "ƒ"
         ;; Logical
         :forall "∀"
         :exists "∃"
         :not "¬"
         :and "∧"
         :or "∨"
+        :import "⟼"
+        :export "⟻"
         ;; Algebraic
         :not-equal "≠"
         ;; Types
