@@ -1,0 +1,38 @@
+# Basic stuff not available on Nix
+tap "homebrew/bundle"
+tap "homebrew/core"
+tap "homebrew/services"
+tap "d12frosted/emacs-plus"
+tap "kowainik/tap"
+
+brew "libvterm"
+brew "kowainik/tap/summoner-cli"
+brew "d12frosted/emacs-plus/emacs-plus@28", args: ["with-ctags", "with-dbus", "with-elrumo1-icon", "with-mailutils", "with-xwidgets"]
+
+# Casks
+tap "homebrew/cask"
+tap "homebrew/cask-versions"
+
+cask "alacritty"
+cask "eloston-chromium"
+cask "firefox"
+cask "folx"
+cask "bitwarden"
+cask "fontbase"
+cask "hammerspoon"
+cask "karabiner-elements"
+cask "iina"
+cask "postico"
+cask "sketch"
+cask "the-unarchiver"
+cask "telegram"
+cask "steam"
+cask "dropbox"
+cask "whatsapp"
+cask "skype"
+cask "openconnect-gui"
+
+# Fonts
+tap "homebrew/cask-fonts"
+
+cask "font-victor-mono"
