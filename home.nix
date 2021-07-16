@@ -65,8 +65,14 @@
     tldr
     tmate
     act
+
+    # Natural Language
     languagetool
     aspell
+    aspellDicts.en
+    aspellDicts.en-science
+    aspellDicts.en-computers
+    aspellDicts.fa
 
     # Cryptography
     bitwarden-cli
