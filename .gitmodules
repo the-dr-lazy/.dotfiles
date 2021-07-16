@@ -1,3 +1,6 @@
 [submodule "emacs"]
 	path = home/emacs.d
 	url = https://github.com/hlissner/doom-emacs
+[submodule "keyboard"]
+	path = home/keyboard
+	url = https://github.com/jasonrudolph/keyboard.git
