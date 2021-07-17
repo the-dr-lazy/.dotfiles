@@ -9,6 +9,11 @@ print_step() {
     printf "\n${GREEN}>>> ${1}${RESET}\n\n"
 }
 
+if [ -d "$DOTFILES" ]; then 
+  printf "The system has been boostraped in the past."
+  exit 1
+fi
+
 #######################################################
 ### Nix
 
@@ -25,20 +30,22 @@ nix-channel --update
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 nix-shell '<home-manager>' -A install
 
+print_step "Install nix-darwin."
+NIX_DARWIN_TEMP_DIR=$(mktemp --directory -t nix-darwin-XXXXX)
+nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer -o "$NIX_DARWIN_TEMP_DIR/result"
+
+
 print_step "Clone .dotfiles repo."
-while [ -d "${DOTFILES}" ]; do
-    read -p "Do you wish to remove \"$DOTFILES?\"" yn
-    case $yn in
-        [Yy]* ) rm -rvf "${DOTFILES}";;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
 git clone "${DOTFILES_REPO_URL}" "${DOTFILES}"
 ln -isv "${DOTFILES}" "${HOME}/.config/nixpkgs"
 
-print_step "Install home-manager config"
+print_step "Build the 1st home generation."
 home-manager switch
+
+print_step "Build the 1st darwin generation."
+ln -sv "$DOTFILES/darwin.nix" "$DOTFILES/darwin-configuration.nix"
+$NIX_DARWIN_TEMP_DIR/result/bin/darwin-installer
+rm -rf "$DOTFILES/darwin-configuration.nix"
 
 #######################################################
 ### Homebrew
