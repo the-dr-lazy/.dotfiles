@@ -50,6 +50,8 @@ initialize_submodule "home/ssh"
 
 print_step "Make ~/.ssh symlink."
 ln -isv "$DOTFILES/home/ssh" "$HOME/.ssh" 
+sudo chmod -R 400 ~/.ssh
+sudo chmod u+rwx ~/.ssh
 
 print_step "Make ~/.nixpkgs symlink."
 ln -isv "$DOTFILES" "$HOME/.nixpkgs"
