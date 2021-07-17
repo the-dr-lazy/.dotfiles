@@ -7,7 +7,7 @@ CWD=$(pwd)
 print_step() {
   GREEN='\033[0;32m'
   RESET='\033[0m' # No Color
-  printf "\n$GREEN>>> $1$RESET\n\n"
+  printf "\n$GREEN>>>>>> $1$RESET\n"
 }
 
 initialize_submodule() {
@@ -16,9 +16,20 @@ initialize_submodule() {
   cd "$CWD"
 }
 
+#######################################################
+### Precondition 
+
+print_step "Check prior run."
 if [ -d "$DOTFILES" ]; then 
-  printf ">>> The script is not idempotent. Trust me, you don't wanna run it for the second time!\n"
-  printf ">>> We're done."
+  printf "Error: The script is not idempotent. Trust me, you don't wanna run it for the second time!\n" >&2
+  printf "<<<<<< We're done." >&2
+  exit 1
+fi
+
+print_step "Check prerequisites."
+if ! hash curl git xifagagaog &>/dev/null; then
+  printf "Error: precondition not met.\n" >&2
+  printf "<<<<<< We're done." >&2
   exit 1
 fi
 
