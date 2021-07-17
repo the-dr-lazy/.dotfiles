@@ -25,7 +25,6 @@ nix-channel --update
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 nix-shell '<home-manager>' -A install
 
-
 print_step "Clone .dotfiles repo."
 while [ -d "${DOTFILES}" ]; do
     read -p "Do you wish to remove \"$DOTFILES?\"" yn
