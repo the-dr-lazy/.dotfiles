@@ -5,6 +5,7 @@
     ./home/shell.nix
     ./home/emacs.nix
     ./home/git.nix
+    ./home/sqitch.nix
   ];
 
   # Let Home Manager install and manage itself.
