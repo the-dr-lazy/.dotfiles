@@ -2,11 +2,18 @@
 
 DOTFILES_REPO_URL="https://github.com/the-dr-lazy/.dotfiles"
 DOTFILES="$HOME/Projects/github/the-dr-lazy/.dotfiles"
+CWD=$(pwd)
 
 print_step() {
-    GREEN='\033[0;32m'
-    RESET='\033[0m' # No Color
-    printf "\n$GREEN>>> $1$RESET\n\n"
+  GREEN='\033[0;32m'
+  RESET='\033[0m' # No Color
+  printf "\n$GREEN>>> $1$RESET\n\n"
+}
+
+initialize_submodule() {
+  cd "$DOTFILES"
+  git submodule update --init "$1"
+  cd "$CWD"
 }
 
 if [ -d "$DOTFILES" ]; then 
@@ -37,8 +44,15 @@ nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer 
 
 print_step "Clone .dotfiles repo."
 git clone "$DOTFILES_REPO_URL" "$DOTFILES"
-git submodule update --init
-ln -isv "$DOTFILES" "$HOME/.config/nixpkgs"
+
+print_step "Initialize ssh submodule."
+initialize_submodule "home/ssh"
+
+print_step "Make ~/.ssh symlink."
+ln -isv "$DOTFILES/home/ssh" "$HOME/.ssh" 
+
+print_step "Make ~/.nixpkgs symlink."
+ln -isv "$DOTFILES" "$HOME/.nixpkgs"
 
 print_step "Build the 1st home generation."
 home-manager switch
@@ -58,17 +72,36 @@ print_step "Install Homebrew packages."
 brew bundle --file "$DOTFILES/config";
 
 #######################################################
+### GnuPG 
+
+print_step "Initialize gnupg submodule."
+initialize_submodule "home/gnupg"
+
+print_step "Make ~/.gnupg symlink."
+ln -isv "$DOTFILES/home/gnupg" "$HOME/.gnupg"
+
+#######################################################
 ### DOOM Emacs
 
+print_step "Initialize emacs.d submodule."
+initialize_submodule "home/emacs.d"
+
+print_step "Make ~/.emacs.d symlink."
+ln -isv "$DOTFILES/home/emacs.d" "$HOME/.emacs.d"
+
 print_step "Install DOOM Emacs."
-ln -sv "$DOTFILES/home/emacs.d" "$HOME/.emacs.d"
 $DOTFILES/home/emacs.d/bin/doom install
 
 #######################################################
 ### Keyboard
 
+print_step "Initialize keyboard submodule."
+initialize_submodule "home/keyboard"
+
+print_step "Make ~/.keyboard symlink."
+ln -isv "$DOTFILES/home/keyboard" "$HOME/.keyboard" 
+
 print_step "Install keyboard."
-ln -sv "$DOTFILES/home/keyboard" "$HOME/.keyboard" 
 $DOTFILES/home/keyboard/scripts/setup
 
 #######################################################
