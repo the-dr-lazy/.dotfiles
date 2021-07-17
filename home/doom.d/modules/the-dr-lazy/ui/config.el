@@ -18,9 +18,9 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two
-(setq doom-font                (font-spec :family "Victor Mono" :size 18)
-      doom-unicode-font        (font-spec :family "Victor Mono" :size 18)
-      doom-variable-pitch-font (font-spec :family "Victor Mono" :size 18))
+(setq doom-font                (font-spec :family "VictorMono Nerd Font" :size 18)
+      doom-unicode-font        (font-spec :family "VictorMono Nerd Font" :size 18)
+      doom-variable-pitch-font (font-spec :family "VictorMono Nerd Font" :size 18))
 
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
