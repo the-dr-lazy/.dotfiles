@@ -1,7 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./home/shell.nix ./home/emacs.nix ];
+  imports = [ 
+    ./home/shell.nix
+    ./home/emacs.nix
+    ./home/git.nix
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -55,11 +59,9 @@
     direnv
     cloc
     entr
-    gitFull
     harfbuzz
     ripgrep
     pass
-    pinentry_mac
     poppler
     youtube-dl
     jq
