@@ -4,6 +4,9 @@
 [submodule "keyboard"]
 	path = home/keyboard
 	url = https://github.com/jasonrudolph/keyboard.git
+[submodule "gnupg"]
+	path = home/gnupg
+	url = git@bitbucket.org:the_dr_lazy/.gnupg.git
 [submodule "ssh"]
 	path = home/ssh
 	url = https://the-dr-lazy@bitbucket.org/the_dr_lazy/.ssh.git
