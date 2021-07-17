@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./home/shell.nix ];
+  imports = [ ./home/shell.nix ./home/emacs.nix ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
