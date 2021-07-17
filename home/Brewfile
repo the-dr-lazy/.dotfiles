@@ -35,4 +35,4 @@ cask "openconnect-gui"
 # Fonts
 tap "homebrew/cask-fonts"
 
-cask "font-victor-mono"
+cask "font-victor-mono-nerd-font"
