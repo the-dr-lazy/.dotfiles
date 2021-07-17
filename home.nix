@@ -22,9 +22,9 @@
 
   home.packages = with pkgs; [
     # Nix
-    nix
+    # nix
     nixfmt
-    cacert
+    # cacert
     nix-prefetch-git
 
     # Basic GNU uitls
