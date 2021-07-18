@@ -53,6 +53,7 @@
     gnupg
     glib
     cmake
+    libtool
 
     # CLI
     colordiff
