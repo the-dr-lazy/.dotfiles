@@ -98,14 +98,14 @@ rm -rf "$DOTFILES/darwin-configuration.nix"
 print_step "Let's install Homebrew."
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)";
 
-print_step "Make ~/Brewfile symlink."
+print_step "Make ~/.Brewfile symlink."
 ln -isv "$DOTFILES/home/Brewfile" "$HOME/Brewfile"
 
-print_step "Make ~/Brewfile.lock.json symlink."
+print_step "Make ~/.Brewfile.lock.json symlink."
 ln -isv "$DOTFILES/home/Brewfile.lock.json" "$HOME/Brewfile.lock.json"
 
 print_step "Install Homebrew packages."
-brew bundle install --verbose 
+brew bundle install --global --verbose
 
 #######################################################
 ### GnuPG 
