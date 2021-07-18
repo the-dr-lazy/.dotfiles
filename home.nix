@@ -1,11 +1,12 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ 
+  imports = [
     ./home/shell.nix
     ./home/emacs.nix
     ./home/git.nix
     ./home/sqitch.nix
+    ./home/npm.nix
   ];
 
   # Let Home Manager install and manage itself.

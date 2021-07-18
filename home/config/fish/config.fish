@@ -13,6 +13,7 @@ status --is-login; and not set -q __fish_login_config_sourced
 and begin
 
 fish_add_path $DOTFILES/home/emacs.d/bin
+fish_add_path $HOME/.node_modules/bin
 
 if test -e $HOME/.nix-profile/etc/profile.d/nix.sh
   fenv source $HOME/.nix-profile/etc/profile.d/nix.sh

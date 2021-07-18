@@ -148,6 +148,11 @@ cd "$CWD"
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 
 #######################################################
+### JavaScript 
+
+npm install --global bash-language-server purescript-language-server typescript-language-server vscode-css-languageserver-bin vscode-html-languageserver-bin
+
+#######################################################
 ### Mac OS X Configuration
 
 print_step "Configure Mac OS X."
