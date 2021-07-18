@@ -1,12 +1,16 @@
 [submodule "emacs"]
-	path = home/emacs.d
-	url = https://github.com/hlissner/doom-emacs
+  path = home/emacs.d
+  url = https://github.com/hlissner/doom-emacs
+  branch = develop 
 [submodule "keyboard"]
-	path = home/keyboard
-	url = https://github.com/jasonrudolph/keyboard.git
+  path = home/keyboard
+  url = me@github/keyboard.git
+  branch = master 
 [submodule "gnupg"]
-	path = home/gnupg
-	url = git@bitbucket.org:the_dr_lazy/.gnupg.git
+  path = home/gnupg
+  url = me@bitbucket/.gnupg.git
+  branch = master 
 [submodule "ssh"]
-	path = home/ssh
-	url = https://the-dr-lazy@bitbucket.org/the_dr_lazy/.ssh.git
+  path = home/ssh
+  url = https://the-dr-lazy@bitbucket.org/the_dr_lazy/.ssh.git
+  branch = master 
