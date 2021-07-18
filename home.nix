@@ -70,6 +70,7 @@
     tldr
     tmate
     act
+    m-cli
 
     # Natural Language
     languagetool
@@ -112,7 +113,6 @@
     dhall-json
 
     # Haskell
-    (pkgs.haskell.lib.justStaticExecutables haskellPackages.ghcup)
     cabal2nix
     hlint
     stylish-haskell

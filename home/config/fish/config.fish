@@ -18,14 +18,14 @@ if test -e $HOME/.nix-profile/etc/profile.d/nix.sh
   fenv source $HOME/.nix-profile/etc/profile.d/nix.sh
 end
 
+if test -e $HOME/.ghcup/env
+  fenv source $HOME/.ghcup/env
+end
+
 set -g __fish_login_config_sourced
 end
 
-$HOME/.nix-profile/bin/direnv hook fish | source
-
-######################################################
-## Prompt
-
+direnv hook fish | source
 starship init fish | source
 
 ######################################################
