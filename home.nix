@@ -33,6 +33,7 @@
     nixfmt
     # cacert
     nix-prefetch-git
+    niv
 
     # Basic GNU uitls
     coreutils
