@@ -67,8 +67,8 @@ defaults write com.apple.dock mineffect -string suck
 defaults write com.apple.dock magnification -bool TRUE
 defaults write com.apple.dock largesize -int 89 
 # Launchpad 
-defaults write com.apple.dock springboard-columns -int 7 
-defaults write com.apple.dock springboard-rows -int 7
+defaults write com.apple.dock springboard-columns -int 8 
+defaults write com.apple.dock springboard-rows -int 7 
 defaults write com.apple.dock ResetLaunchPad -bool TRUE
 
 ######################################################
