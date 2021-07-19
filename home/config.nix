@@ -5,7 +5,6 @@
     ".config/starship.toml".source = ./config/starship.toml;
     ".alacritty.yml".source = ./config/alacritty.yml;
     ".sqitch/sqitch.conf".source = ./config/sqitch/config.ini;
-    ".npmrc".source = ./config/npmrc;
     ".gitconfig".source = ./config/gitconfig.ini;
     ".doom.d" = {
       source = ./doom.d;
