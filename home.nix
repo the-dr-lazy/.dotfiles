@@ -1,13 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./home/shell.nix
-    ./home/emacs.nix
-    ./home/git.nix
-    ./home/sqitch.nix
-    ./home/npm.nix
-  ];
+  imports = [ ./home/config.nix ./home/shell.nix ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -30,9 +24,7 @@
 
   home.packages = with pkgs; [
     # Nix
-    # nix
     nixfmt
-    # cacert
     nix-prefetch-git
     niv
 
@@ -74,6 +66,7 @@
     tmate
     act
     m-cli
+    gitFull
 
     # Natural Language
     languagetool
@@ -88,14 +81,6 @@
     docker
     docker-compose
 
-    # LSP & Formatters
-    shellcheck
-    dhall-lsp-server
-    vale
-    pgformatter
-    shfmt
-    hadolint
-
     # C
     llvm
 
@@ -105,23 +90,6 @@
 
     # Vim
     vim
-
-    # Dhall
-    dhall
-    dhall-nix
-    dhall-json
-
-    # Haskell
-    cabal2nix
-    hlint
-    stylish-haskell
-    (pkgs.haskell.lib.justStaticExecutables haskellPackages.ghcid)
-
-    # JavaScript
-    nodejs-16_x
-
-    # Python
-    python3Full
   ];
 
   # This value determines the Home Manager release that your

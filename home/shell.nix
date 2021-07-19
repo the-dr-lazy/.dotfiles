@@ -1,11 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  home.file = {
-    ".config/starship.toml".source = ./config/starship.toml;
-    ".alacritty.yml".source = ./config/alacritty.yml;
-  };
-
   programs.fish = {
     enable = true;
     plugins = [
