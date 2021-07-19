@@ -77,11 +77,7 @@
 
     # Natural Language
     languagetool
-    aspell
-    aspellDicts.en
-    aspellDicts.en-science
-    aspellDicts.en-computers
-    aspellDicts.fa
+    (aspellWithDicts (ds: with ds; [ en en-science en-computers fa ]))
 
     # Cryptography
     bitwarden-cli
