@@ -10,10 +10,20 @@
   environment.darwinConfig = "$HOME/.nixpkgs/darwin.nix";
 
   # Auto upgrade nix package and the daemon service.
-  nix.package = pkgs.nix;
-  nix.binaryCachePublicKeys =
-    [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
-  nix.binaryCaches = [ "https://hydra.iohk.io" ];
+  nix = {
+    package = pkgs.nix;
+    binaryCachePublicKeys = [
+      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+      "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+      "the-dr-lazy.cachix.org-1:TI5TClLAkhXY4ACaTHO3/H1XUxuf85HBxz8AHlNVgHM="
+    ];
+    binaryCaches = [
+      "https://hydra.iohk.io"
+      "https://iohk.cachix.org"
+      "https://the-dr-lazy.cachix.org"
+    ];
+    trustedUsers = [ "root" "the-dr-lazy" ];
+  };
 
   programs.fish.enable = true;
 
