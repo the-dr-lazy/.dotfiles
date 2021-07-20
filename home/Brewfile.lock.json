@@ -2,28 +2,28 @@
   "entries": {
     "tap": {
       "homebrew/bundle": {
-        "revision": "7ec0ec6f4b7560f3ee448d5595160f54e4e0ca40"
+        "revision": "89bade64f90bad90b2f4c3eb4cf00e82fc140d23"
       },
       "homebrew/core": {
-        "revision": "48b3156e29e9082dab02ed2070621052271f716b"
+        "revision": "2d9285f376ac22b7db19a6347dfacda76726b68f"
       },
       "homebrew/services": {
         "revision": "c8f71846b2ee29c46a9557f9a03f106d5d2778d8"
       },
       "d12frosted/emacs-plus": {
-        "revision": "753865074ff36f66713c2f46d36226cd509b39e6"
+        "revision": "368b9cc5eea056a9791216a4a9ab52edad41f519"
       },
       "kowainik/tap": {
         "revision": "cddafcde37f29fdcdd004249c7f7e38f4432e9e2"
       },
       "homebrew/cask": {
-        "revision": "8526ece8b6330b676ec207ee87d359fb41e0073c"
+        "revision": "9be76f17d7ae56b056c15d81e33467443a11a94f"
       },
       "homebrew/cask-versions": {
-        "revision": "71ce2995857edf4b323651f1e25fe93b679bd56f"
+        "revision": "6dda6e023aeddeea2edb4b0683c22dd1da212c2c"
       },
       "homebrew/cask-fonts": {
-        "revision": "08395c17dfe880bf2cbe1e1ebeb95fd970ba8886"
+        "revision": "9a989b03b25dd0953881932e01b62a08fe541c8e"
       }
     },
     "brew": {
@@ -161,7 +161,7 @@
         }
       },
       "firefox": {
-        "version": "90.0",
+        "version": "90.0.1",
         "options": {
           "full_name": "firefox"
         }
@@ -197,7 +197,7 @@
         }
       },
       "iina": {
-        "version": "1.1.2,128",
+        "version": "1.2.0,129",
         "options": {
           "full_name": "iina"
         }
@@ -267,9 +267,9 @@
   "system": {
     "macos": {
       "big_sur": {
-        "HOMEBREW_VERSION": "3.2.2",
+        "HOMEBREW_VERSION": "3.2.3",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "48b3156e29e9082dab02ed2070621052271f716b",
+        "Homebrew/homebrew-core": "2d9285f376ac22b7db19a6347dfacda76726b68f",
         "CLT": "12.5.1.0.1.1623191612",
         "Xcode": "12.5",
         "macOS": "11.4"
