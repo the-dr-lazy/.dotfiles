@@ -6,6 +6,7 @@
     ".alacritty.yml".source = ./config/alacritty.yml;
     ".sqitch/sqitch.conf".source = ./config/sqitch/config.ini;
     ".gitconfig".source = ./config/gitconfig.ini;
+    ".gitignore".source = ./config/global.gitignore;
     ".doom.d" = {
       source = ./doom.d;
       recursive = true;
