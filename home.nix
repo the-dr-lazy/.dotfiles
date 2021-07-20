@@ -27,6 +27,7 @@
     nixfmt
     nix-prefetch-git
     niv
+    cachix
 
     # Basic GNU uitls
     coreutils
