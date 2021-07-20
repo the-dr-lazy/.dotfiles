@@ -17,7 +17,7 @@
 
   programs.fish.enable = true;
 
-  services.nix-daemon.enable = false;
+  services.nix-daemon.enable = true;
   services.lorri.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
