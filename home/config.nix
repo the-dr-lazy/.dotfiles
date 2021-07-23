@@ -8,7 +8,7 @@
     ".gitconfig".source = ./config/gitconfig.ini;
     ".gitignore".source = ./config/global.gitignore;
     ".doom.d" = {
-      source = ./doom.d;
+      source = ./config/doom.d;
       recursive = true;
       onChange = "doom sync";
     };
