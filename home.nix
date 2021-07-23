@@ -33,7 +33,6 @@
     coreutils
     findutils
     diffutils
-    binutils
     mailutils
     gawk
     gnumake
@@ -83,6 +82,7 @@
     docker-compose
 
     # C
+    gcc
     llvm
 
     # Emacs
