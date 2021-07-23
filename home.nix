@@ -24,7 +24,7 @@
 
   home.packages = with pkgs; [
     # Nix
-    nixfmt
+    nixpkgs-fmt
     nix-prefetch-git
     niv
     cachix
