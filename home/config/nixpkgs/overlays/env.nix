@@ -6,6 +6,7 @@ final: prev: {
         nodejs
         purescript
         spago
+        nodePackages.typescript
         nodePackages.typescript-language-server
         nodePackages.vscode-html-languageserver-bin
         nodePackages.vscode-css-languageserver-bin
