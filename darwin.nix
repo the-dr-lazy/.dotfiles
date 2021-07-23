@@ -15,7 +15,6 @@
     binaryCachePublicKeys = [
       "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
       "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
-      "the-dr-lazy.cachix.org-1:TI5TClLAkhXY4ACaTHO3/H1XUxuf85HBxz8AHlNVgHM="
     ];
     binaryCaches = [
       "https://hydra.iohk.io"
@@ -27,7 +26,7 @@
 
   programs.fish.enable = true;
 
-  services.nix-daemon.enable = true;
+  services.nix-daemon.enable = false;
   services.lorri.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
