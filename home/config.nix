@@ -16,5 +16,9 @@
       source = ./config/nixpkgs;
       recursive = true;
     };
+    "Library/Desktop Pictures" = {
+      source = ./wallpapers;
+      recursive = true;
+    };
   };
 }
