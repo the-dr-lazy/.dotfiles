@@ -11,7 +11,7 @@
 
   # Auto upgrade nix package and the daemon service.
   nix = {
-    package = pkgs.nix;
+    package = pkgs.nixFlakes;
     binaryCachePublicKeys = [
       "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
       "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
@@ -22,6 +22,7 @@
       "https://the-dr-lazy.cachix.org"
     ];
     trustedUsers = [ "root" "the-dr-lazy" ];
+    extraOptions = "experimental-features = nix-command flakes";
   };
 
   programs.fish.enable = true;
