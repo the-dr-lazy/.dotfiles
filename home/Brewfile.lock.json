@@ -2,28 +2,28 @@
   "entries": {
     "tap": {
       "homebrew/bundle": {
-        "revision": "89bade64f90bad90b2f4c3eb4cf00e82fc140d23"
+        "revision": "e8b894acd1c6e7431b8efb5a30457ab8668daeeb"
       },
       "homebrew/core": {
-        "revision": "2d9285f376ac22b7db19a6347dfacda76726b68f"
+        "revision": "7de8447ed38f14dd513bb9be613f0b6dfa4c59ed"
       },
       "homebrew/services": {
         "revision": "c8f71846b2ee29c46a9557f9a03f106d5d2778d8"
       },
       "d12frosted/emacs-plus": {
-        "revision": "368b9cc5eea056a9791216a4a9ab52edad41f519"
+        "revision": "4f44f338fcfe743f5e54cf2417422ad0d77d0fec"
       },
       "kowainik/tap": {
         "revision": "cddafcde37f29fdcdd004249c7f7e38f4432e9e2"
       },
       "homebrew/cask": {
-        "revision": "9be76f17d7ae56b056c15d81e33467443a11a94f"
+        "revision": "59ead4b4d416705ccb713a35e6bbafeb09e9f9a6"
       },
       "homebrew/cask-versions": {
-        "revision": "6dda6e023aeddeea2edb4b0683c22dd1da212c2c"
+        "revision": "4fd9483ee99033a8e3feee875bbe76137aac7357"
       },
       "homebrew/cask-fonts": {
-        "revision": "9a989b03b25dd0953881932e01b62a08fe541c8e"
+        "revision": "ce3847279b586826aa8af2ddf6b5b6e52cbefa2b"
       }
     },
     "brew": {
@@ -155,13 +155,13 @@
         }
       },
       "eloston-chromium": {
-        "version": "91.0.4472.164-1.1_x86-64",
+        "version": "92.0.4515.107-1.1_x86-64",
         "options": {
           "full_name": "eloston-chromium"
         }
       },
       "firefox": {
-        "version": "90.0.1",
+        "version": "90.0.2",
         "options": {
           "full_name": "firefox"
         }
@@ -209,7 +209,7 @@
         }
       },
       "sketch": {
-        "version": "73.1,127209",
+        "version": "74.1,128920",
         "options": {
           "full_name": "sketch"
         }
@@ -227,25 +227,25 @@
         }
       },
       "steam": {
-        "version": "2021-07-13",
+        "version": "2021-07-22",
         "options": {
           "full_name": "steam"
         }
       },
       "dropbox": {
-        "version": "126.4.4618",
+        "version": "127.4.4265",
         "options": {
           "full_name": "dropbox"
         }
       },
       "whatsapp": {
-        "version": "2.2126.11",
+        "version": "2.2126.14",
         "options": {
           "full_name": "whatsapp"
         }
       },
       "skype": {
-        "version": "8.73.0.92",
+        "version": "8.74.0.152",
         "options": {
           "full_name": "skype"
         }
@@ -261,6 +261,12 @@
         "options": {
           "full_name": "font-victor-mono-nerd-font"
         }
+      },
+      "openvpn-connect": {
+        "version": "3.2.7,3220",
+        "options": {
+          "full_name": "openvpn-connect"
+        }
       }
     }
   },
@@ -269,7 +275,7 @@
       "big_sur": {
         "HOMEBREW_VERSION": "3.2.3",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "2d9285f376ac22b7db19a6347dfacda76726b68f",
+        "Homebrew/homebrew-core": "7de8447ed38f14dd513bb9be613f0b6dfa4c59ed",
         "CLT": "12.5.1.0.1.1623191612",
         "Xcode": "12.5",
         "macOS": "11.4"

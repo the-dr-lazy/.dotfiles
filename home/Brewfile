@@ -33,6 +33,7 @@ cask "dropbox"
 cask "whatsapp"
 cask "skype"
 cask "openconnect-gui"
+cask "openvpn-connect"
 
 # Fonts
 tap "homebrew/cask-fonts"
