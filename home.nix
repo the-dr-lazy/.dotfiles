@@ -66,7 +66,7 @@
     tmate
     act
     m-cli
-    gitFull
+    git
 
     # Natural Language
     languagetool
