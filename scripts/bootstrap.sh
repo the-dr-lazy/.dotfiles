@@ -7,7 +7,7 @@ CWD=$(pwd)
 print_step() {
   GREEN='\033[0;32m'
   RESET='\033[0m' # No Color
-  printf "$GREEN>>>>>> $1$RESET\n"
+  printf "%s>>>>>> %s%s\n" "$GREEN" "$1" "$RESET"
 }
 
 initialize_submodule() {
@@ -17,30 +17,30 @@ initialize_submodule() {
 }
 
 #######################################################
-### Precondition 
+### Precondition
 
 print_step "Check prior run."
-if [ -d "$DOTFILES" ]; then 
+if [ -d "$DOTFILES" ]; then
   printf "Error: The script is not idempotent. Trust me, you don't wanna run it for the second time!\n" >&2
   printf "<<<<<< We're done." >&2
   exit 1
 fi
 
 print_step "Check command line tools installation."
-CLT_CHECK=$((xcode-select --install) 2>&1)
+CLT_CHECK=$( (xcode-select --install) 2>&1 )
 CLT_OUTPUT="xcode-select: note: install requested for command line developer tools"
 if [ "$CLT_CHECK" == "$CLT_OUTPUT" ]; then
   print_step "Command line tools installation has been requested."
   print_step "Waiting until installation complete..."
 fi
-while [[ "$CLT_CHECK" == "$CLT_OUTPUT" ]]; do 
+while [[ "$CLT_CHECK" == "$CLT_OUTPUT" ]]; do
   sleep 10
-  CLT_CHECK=$((xcode-select --install) 2>&1)
+  CLT_CHECK=$( (xcode-select --install) 2>&1 )
 done
 
 print_step "Please make sure you are not on the f*** Iran's internet network!"
 print_step "Press <Enter> to continue..."
-read TEMP
+read -r _
 
 set -e
 
@@ -49,7 +49,8 @@ set -e
 
 print_step "Install Nix."
 sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
-source $HOME/.nix-profile/etc/profile.d/nix.sh
+# shellcheck disable=SC1091
+source "$HOME/.nix-profile/etc/profile.d/nix.sh"
 
 print_step "Add unstable channel."
 nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable
@@ -60,7 +61,7 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/master.t
 nix-channel --update
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
 nix-shell '<home-manager>' -A install
-rm -rf "$HOM/.config/nixpkgs/home.nix"
+rm -rf "$HOME/.config/nixpkgs/home.nix"
 
 print_step "Install Nix Darwin."
 NIX_DARWIN_TEMP_DIR=$(mktemp -d -t nix-darwin-XXXXX)
@@ -73,8 +74,8 @@ print_step "Initialize ssh submodule."
 initialize_submodule "home/ssh"
 
 print_step "Make ~/.ssh symlink."
-ln -isv "$DOTFILES/home/ssh" "$HOME/.ssh" 
-sudo chmod -R 400 "$HOME/.ssh" 
+ln -isv "$DOTFILES/home/ssh" "$HOME/.ssh"
+sudo chmod -R 400 "$HOME/.ssh"
 sudo chmod u+rwx "$HOME/.ssh"
 sudo chmod u+rw "$HOME/.ssh/config"
 sudo chmod u+rw "$HOME/.ssh/known_hosts"
@@ -87,7 +88,7 @@ ln -isv "$DOTFILES" "$HOME/.nixpkgs"
 
 print_step "Build the 1st Darwin generation."
 ln -sv "$DOTFILES/system.nix" "$DOTFILES/darwin-configuration.nix"
-$NIX_DARWIN_TEMP_DIR/result/bin/darwin-installer
+"$NIX_DARWIN_TEMP_DIR/result/bin/darwin-installer"
 rm -rf "$DOTFILES/darwin-configuration.nix"
 darwin-rebuild switch --flake "$DOTFILES"
 
@@ -111,7 +112,7 @@ print_step "Install Homebrew packages."
 brew bundle install --global --verbose
 
 #######################################################
-### GnuPG 
+### GnuPG
 
 print_step "Initialize gnupg submodule."
 initialize_submodule "home/gnupg"
@@ -129,7 +130,7 @@ print_step "Make ~/.emacs.d symlink."
 ln -isv "$DOTFILES/home/emacs.d" "$HOME/.emacs.d"
 
 print_step "Install DOOM Emacs."
-$DOTFILES/home/emacs.d/bin/doom install
+"$DOTFILES"/home/emacs.d/bin/doom install
 
 #######################################################
 ### Keyboard
@@ -138,18 +139,18 @@ print_step "Initialize keyboard submodule."
 initialize_submodule "home/keyboard"
 
 print_step "Make ~/.keyboard symlink."
-ln -isv "$DOTFILES/home/keyboard" "$HOME/.keyboard" 
+ln -isv "$DOTFILES/home/keyboard" "$HOME/.keyboard"
 
 print_step "Install keyboard."
 cd "$DOTFILES/home/keyboard"
-$DOTFILES/home/keyboard/script/setup
+"$DOTFILES/home/keyboard/script/setup"
 cd "$CWD"
 
 #######################################################
 ### Mac OS X Configuration
 
 print_step "Configure Mac OS X."
-$DOTFILES/scripts/macos.sh
+"$DOTFILES"/scripts/macos.sh
 
 #######################################################
 ### Done

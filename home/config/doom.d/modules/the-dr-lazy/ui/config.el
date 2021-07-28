@@ -74,7 +74,7 @@
         doom-themes-enable-italic t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Dashboard 
+;; Dashboard
 
 (setq +doom-dashboard-functions '(doom-dashboard-widget-banner))
 (setq fancy-splash-image (concat doom-private-dir "modules/the-dr-lazy/ui/media/gnu.png"))

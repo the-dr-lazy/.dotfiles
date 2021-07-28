@@ -1,27 +1,27 @@
 #!/bin/bash
 
 ######################################################
-### Precondition 
+### Precondition
 
 echo "Configuring macOS settings, built-in app, CLI tools, and other Apps"
 echo "(press any key to continue, Ctrl-C to abort)"
-read TEMP
+read -r _
 
 ######################################################
-### General 
+### General
 
 # Enable subpixel font rendering on non-Apple LCDs
 defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO
 defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
 ######################################################
-### Network 
+### Network
 
 # Turn Firewall on
 m firewall enable
 
 ######################################################
-### Menu Bar 
+### Menu Bar
 
 # Show full clock
 defaults write com.apple.menuextra.clock DateFormat -string 'EEE d MMM  HH:mm:ss'
@@ -29,7 +29,7 @@ defaults write com.apple.menuextra.clock IsAnalog -bool false
 defaults write com.apple.menuextra.clock FlashDateSeparators -bool false
 
 ######################################################
-### Finder 
+### Finder
 
 # Expand save panel by default
 #defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
@@ -51,24 +51,24 @@ m finder showpath YES
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
 ######################################################
-### Dock 
+### Dock
 
 # Hide the Dock
 m dock autohide YES
 # Set the icon size of Dock items to 42 pixels
 defaults write com.apple.dock tilesize -int 34
 # Change dock position to left
-m dock position BOTTOM 
+m dock position BOTTOM
 # Remove all items from Dock
 m dock prune
 # Animation effect
 defaults write com.apple.dock mineffect -string suck
 # Magnification
 defaults write com.apple.dock magnification -bool TRUE
-defaults write com.apple.dock largesize -int 89 
-# Launchpad 
-defaults write com.apple.dock springboard-columns -int 8 
-defaults write com.apple.dock springboard-rows -int 7 
+defaults write com.apple.dock largesize -int 89
+# Launchpad
+defaults write com.apple.dock springboard-columns -int 8
+defaults write com.apple.dock springboard-rows -int 7
 defaults write com.apple.dock ResetLaunchPad -bool TRUE
 
 ######################################################
@@ -80,13 +80,13 @@ defaults write com.apple.ActivityMonitor IconType -int 5
 defaults write com.apple.ActivityMonitor ShowCategory -int 0
 
 ######################################################
-### Safari 
+### Safari
 
 # Privacy: don’t send search queries to Apple
 defaults write com.apple.Safari UniversalSearchEnabled -bool false
 defaults write com.apple.Safari SuppressSearchSuggestions -bool true
 
 ######################################################
-### Done 
+### Done
 
 echo "Configuration finished"

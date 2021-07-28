@@ -39,17 +39,17 @@ function fish_greeting
   begin
     echo (date) " @ " (hostname)
     echo
-    fortune -a -n 55 | cowsay -f $toon 
+    fortune -a -n 55 | cowsay -f $toon
   end | lolcat
 end
 
 ######################################################
-## Theme 
+## Theme
 
 set -g theme_nerd_fonts yes
-set -g theme_display_docker_machine yes 
+set -g theme_display_docker_machine yes
 set -g theme_display_virtualenv no
-set -g theme_display_nix yes 
+set -g theme_display_nix yes
 set -g theme_display_node yes
 set -g theme_display_user ssh
 set -g theme_display_date no
@@ -58,8 +58,8 @@ set -g theme_title_display_path no
 set -g theme_title_display_user yes
 set -g theme_title_use_abbreviated_path no
 set -g theme_date_format "+%a %H:%M"
-set -g theme_date_timezone Iran/Tehran 
-set -g theme_color_scheme nord 
+set -g theme_date_timezone Iran/Tehran
+set -g theme_color_scheme nord
 
 function awaketime -d "Display time since last waking."
     echo "Awake Since " \
@@ -70,5 +70,3 @@ function gitlog -d "More detailed, prettified output for git."
     git log --graph --abbrev-commit \
     --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"
 end
-
-
