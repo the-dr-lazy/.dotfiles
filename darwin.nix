@@ -22,7 +22,9 @@
       "https://the-dr-lazy.cachix.org"
     ];
     trustedUsers = [ "root" "the-dr-lazy" ];
-    extraOptions = "experimental-features = nix-command flakes";
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
   };
 
   programs.fish.enable = true;
