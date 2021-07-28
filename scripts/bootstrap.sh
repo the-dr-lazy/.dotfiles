@@ -82,15 +82,18 @@ sudo chmod u+rw "$HOME/.ssh/known_hosts"
 print_step "Make ~/.nixpkgs symlink."
 ln -isv "$DOTFILES" "$HOME/.nixpkgs"
 
-print_step "Build the 1st Home generation."
-home-manager switch
-echo "$HOME/.nix-profile/bin/fish" | sudo tee -a /etc/shells
-chsh -s "$HOME/.nix-profile/bin/fish"
+# print_step "Build the 1st Home generation."
+# home-manager switch
 
 print_step "Build the 1st Darwin generation."
-ln -sv "$DOTFILES/darwin.nix" "$DOTFILES/darwin-configuration.nix"
+ln -sv "$DOTFILES/system.nix" "$DOTFILES/darwin-configuration.nix"
 $NIX_DARWIN_TEMP_DIR/result/bin/darwin-installer
 rm -rf "$DOTFILES/darwin-configuration.nix"
+darwin-rebuild switch --flake "$DOTFILES"
+
+print_step "Make fish the default shell."
+echo "$HOME/.nix-profile/bin/fish" | sudo tee -a /etc/shells
+chsh -s "$HOME/.nix-profile/bin/fish"
 
 #######################################################
 ### Homebrew
