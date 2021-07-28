@@ -2,7 +2,7 @@
   description = "amygdala :: ∀ a. a → IO Memory's Mac OS X";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs?ref=21.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-21.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     utils.url = "github:numtide/flake-utils";
     home-manager = {
