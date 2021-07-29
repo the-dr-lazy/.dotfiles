@@ -42,6 +42,7 @@
       "openconnect-gui"
       "openvpn-connect"
       "postico"
+      "secretive"
       "sketch"
       "skype"
       "steam"
