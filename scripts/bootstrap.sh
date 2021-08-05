@@ -47,10 +47,15 @@ set -e
 #######################################################
 ### Nix
 
+# FIXME: use Nix flakes
+
 print_step "Install Nix."
 sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
 # shellcheck disable=SC1091
 source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+
+print_step "Add Nix registry"
+nix registry add me github:the-dr-lazy/.dotfiles
 
 print_step "Add unstable channel."
 nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs-unstable

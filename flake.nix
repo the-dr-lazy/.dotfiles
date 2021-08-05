@@ -23,6 +23,11 @@
           (import ./system)
         ];
       };
+
+      templates.web = {
+        path = ./templates/web;
+        description = "Web development environment";
+      };
     } // utils.lib.eachDefaultSystem (system: {
       devShell = import ./shell.nix { inherit system; pkgs = nixpkgs.legacyPackages.${system}; };
     });
