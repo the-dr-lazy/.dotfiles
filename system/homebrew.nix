@@ -43,13 +43,13 @@
       "openconnect-gui"
       "openvpn-connect"
       "postico"
-      "secretive"
-      "sketch"
       "skype"
       "steam"
       "telegram"
       "the-unarchiver"
       "whatsapp"
+      # "android-file-transfer"
+      # "secretive"
     ];
 
     extraConfig = ''
