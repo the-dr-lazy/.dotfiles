@@ -22,6 +22,18 @@
 (setq-default electric-indent-inhibit t)
 (setq backward-delete-char-untabify-method 'hungry)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; RTL
+
+(defun set-bidi-env ()
+  "interactive"
+  (setq bidi-paragraph-direction 'nil))
+
+(add-hook! 'org-mode-hook 'set-bidi-env)
+(add-hook! 'latex-mode-hook 'set-bidi-env)
+(add-hook! 'markdown-mode-hook 'set-bidi-env)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Line Numbers
 
