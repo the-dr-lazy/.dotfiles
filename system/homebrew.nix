@@ -30,6 +30,7 @@
     casks = [
       "alacritty"
       "bitwarden"
+      "docker"
       "dropbox"
       "eloston-chromium"
       "firefox"

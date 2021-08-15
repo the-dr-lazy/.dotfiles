@@ -83,7 +83,6 @@
     openssl
 
     # Tools
-    docker
     docker-compose
 
     # C
