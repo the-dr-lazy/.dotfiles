@@ -1,14 +1,6 @@
 ;;; the-dr-lazy/tools/config.el -*- lexical-binding: t; -*-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Projectile
-
-;; (setq projectile-project-search-path '("~/Projects/github"
-;;                                        "~/Projects/gitlab"
-;;                                        "~/Projects/experiments"
-;;                                        "~/.doom.d"))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; GPG
 
 (setq epg-pinentry-mode 'loopback)
@@ -16,7 +8,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Magit
-
 
 (setq use-magit-commit-prompt-p nil)
 
