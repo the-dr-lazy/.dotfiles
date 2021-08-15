@@ -29,7 +29,6 @@
 
     casks = [
       "alacritty"
-      # "android-file-transfer"
       "bitwarden"
       "dropbox"
       "eloston-chromium"
