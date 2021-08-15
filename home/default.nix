@@ -84,6 +84,7 @@
 
     # Tools
     docker-compose
+    (pkgs.texlive.combine { inherit (pkgs.texlive) scheme-small wrapfig capt-of; })
 
     # C
     gcc
