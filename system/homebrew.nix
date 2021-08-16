@@ -17,6 +17,7 @@
       "homebrew/core"
       "homebrew/services"
       "kowainik/tap"
+      "the-dr-lazy/tap"
     ];
 
     # Basic stuff not available on Nix
@@ -46,6 +47,7 @@
       "skype"
       "steam"
       "telegram"
+      "the-dr-lazy/tap/sketch"
       "the-unarchiver"
       "whatsapp"
       # "android-file-transfer"
