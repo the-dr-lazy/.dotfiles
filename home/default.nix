@@ -84,7 +84,6 @@
 
     # Tools
     docker-compose
-    (pkgs.texlive.combine { inherit (pkgs.texlive) scheme-small wrapfig capt-of; })
 
     # C
     gcc
@@ -93,6 +92,9 @@
     # Emacs
     sqlite
     editorconfig-core-c
+    pywal
+    (pkgs.texlive.combine { inherit (pkgs.texlive) scheme-full; })
+    delta
 
     # Vim
     vim

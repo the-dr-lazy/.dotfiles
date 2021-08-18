@@ -1,21 +1,5 @@
 final: _: {
   env = with final; {
-    web = buildEnv {
-      name = "web-env";
-      paths = [
-        nodejs
-        purescript
-        spago
-        nodePackages.typescript
-        nodePackages.typescript-language-server
-        nodePackages.vscode-html-languageserver-bin
-        nodePackages.vscode-css-languageserver-bin
-        nodePackages.yaml-language-server
-        nodePackages.purescript-language-server
-        nodePackages.prettier
-      ];
-    };
-
     haskell = buildEnv {
       name = "haskell-env";
       paths =
