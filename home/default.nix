@@ -95,6 +95,7 @@
     pywal
     (pkgs.texlive.combine { inherit (pkgs.texlive) scheme-full; })
     delta
+    pandoc
 
     # Vim
     vim
