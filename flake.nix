@@ -17,7 +17,7 @@
 
   outputs = { nixpkgs, utils, home-manager, darwin, ... }:
     {
-      packages.x86_64-darwin.darwinConfigurations.Mohammads-MacBook-Air = darwin.lib.darwinSystem {
+      packages.x86_64-darwin.darwinConfigurations.Mohammads-Air = darwin.lib.darwinSystem {
         modules = [
           home-manager.darwinModules.home-manager
           (import ./system)
@@ -29,6 +29,6 @@
         description = "Web development environment";
       };
     } // utils.lib.eachDefaultSystem (system: {
-      devShell = import ./shell.nix { inherit system; pkgs = nixpkgs.legacyPackages.${system}; };
+      devShell = import ./shell.nix { inherit system; pkgs = import nixpkgs { inherit system; }; };
     });
 }
