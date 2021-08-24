@@ -47,7 +47,6 @@
       "iina"
       "karabiner-elements"
       "maintenance"
-      "onyx"
       "openconnect-gui"
       "openvpn-connect"
       "postico"
