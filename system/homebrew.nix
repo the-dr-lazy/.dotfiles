@@ -55,6 +55,7 @@
       "telegram"
       "the-dr-lazy/tap/sketch"
       "the-unarchiver"
+      "visual-studio-code"
       "whatsapp"
       # "android-file-transfer"
       # "secretive"
