@@ -914,6 +914,18 @@ From the =:core packages= module.
  "<<" ">>"
  :actions '(insert))
 #+end_src
+*** Direnv
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! inheritenv)
+#+end_src
+
+#+begin_src emacs-lisp
+;;(use-package! inheritenv
+;;  :config
+;;  (inheritenv-add-advice 'shell-command-to-string))
+#+end_src
+
 ** Visuals
 *** LSP
 #+begin_src emacs-lisp
@@ -1167,67 +1179,6 @@ Thankfully, it isn't too hard to add these to the ~composition-function-table~.
 #+begin_src emacs-lisp
 (set-char-table-range composition-function-table ?f '(["\\(?:ff?[fijlt]\\)" 0 font-shape-gstring]))
 (set-char-table-range composition-function-table ?T '(["\\(?:Th\\)" 0 font-shape-gstring]))
-#+end_src
-*** Marginalia
-#+begin_quote
-Part of the =:completion vertico= module.
-#+end_quote
-
-Marginalia is nice, but the file metadata annotations are a little too plain.
-Specifically, I have these gripes
-+ File attributes would be nicer if coloured
-+ I don't care about the user/group information if the user/group is me
-+ When a file time is recent, a relative age (e.g. =2h ago=) is more useful than
-  the date
-+ An indication of file fatness would be nice
-
-Thanks to the ~marginalia-annotator-registry~, we don't have to advise, we can
-just add a new =file= annotator.
-
-Another small thing is the face used for docstrings. At the moment it's =(italic
-shadow)=, but I don't like that.
-#+begin_src emacs-lisp
-(after! marginalia
-
-  (setq marginalia-censor-variables nil)
-
-  (defun +marginalia-annotate-file-colorful (cand)
-  "Annotate file CAND with its size, modification time and other attrs.
-These annotations are skipped for remote paths."
-  (if (or (marginalia--remote-p cand)
-          (when-let (win (active-minibuffer-window))
-            (with-current-buffer (window-buffer win)
-              (marginalia--remote-p (minibuffer-contents-no-properties)))))
-      (marginalia--fields ("*Remote*" :face 'marginalia-documentation))
-    (when-let (attrs (file-attributes (substitute-in-file-name
-                                       (marginalia--full-candidate cand))
-                                      'integer))
-      (marginalia--fields
-       ((marginalia--file-owner attrs)
-        :width 12 :face 'marginalia-file-owner)
-       ((marginalia--file-modes attrs))
-       ((+marginalia-file-size-colorful (file-attribute-size attrs))
-        :width 7)
-       ((+marginalia--time-colorful (file-attribute-modification-time attrs))
-        :width 12)))))
-
-  (defun +marginalia--time-colorful (time)
-    (let* ((seconds (float-time (time-subtract (current-time) time)))
-           (color (doom-blend
-                   (face-attribute 'marginalia-date :foreground nil t)
-                   (face-attribute 'marginalia-documentation :foreground nil t)
-                   (/ 1.0 (log (+ 3 (/ (+ 1 seconds) 345600.0)))))))
-      ;; 1 - log(3 + 1/(days + 1)) % grey
-      (propertize (marginalia--time time) 'face (list :foreground color))))
-
-  (defun +marginalia-file-size-colorful (size)
-    (let* ((size-index (/ (log10 (+ 1 size)) 7.0))
-           (color (if (< size-index 10000000) ; 10m
-                      (doom-blend 'orange 'green size-index)
-                    (doom-blend 'red 'orange (- size-index 1)))))
-      (propertize (file-size-human-readable size) 'face (list :foreground color))))
-
-  (setcdr (assq 'file marginalia-annotator-registry) '(+marginalia-annotate-file-colorful builtin none)))
 #+end_src
 *** Prettier Page Breaks
 In some files, =^L= appears as a page break character. This isn't that visually
@@ -1565,11 +1516,11 @@ improvement to me! We'll make use of this with =writeroom-mode=.
   :recipe (:host github :repo "Fuco1/org-pretty-table")
   :pin "87772a9469d91770f87bfa788580fca69b9e697a")
 #+end_src
+
 #+begin_src emacs-lisp :tangle yes
 (use-package! org-pretty-table
   :commands (org-pretty-table-mode global-org-pretty-table-mode))
 #+end_src
-
 ***** Emphasis markers
 While ~org-hide-emphasis-markers~ is very nice, it can sometimes make edits which
 occur at the border a bit more fiddley. We can improve this situation without
@@ -1591,7 +1542,6 @@ sacrificing visual amenities with the =org-appear= package.
   ;; needs to be run after other hooks have acted.
   (run-at-time nil nil #'org-appear--set-elements))
 #+end_src
-
 ***** Heading structure
 Speaking of headlines, a nice package for viewing and managing the heading
 structure has come to my attention.
@@ -1609,7 +1559,6 @@ structure has come to my attention.
       :localleader
       :desc "Outline" "O" #'org-ol-tree)
 #+end_src
-
 *** Behaviour
 **** Tweaking Defaults
 #+begin_src emacs-lisp
@@ -2437,24 +2386,6 @@ We can then have quote blocks stand out a bit more by making them /italic/.
 #+begin_src emacs-lisp
 (setq org-fontify-quote-and-verse-blocks t)
 #+end_src
-
-Org files can be rather nice to look at, particularly with some of the
-customisations here. This comes at a cost however, expensive font-lock.
-Feeling like you're typing through molasses in large files is no fun, but there
-is a way I can defer font-locking when typing to make the experience more
-responsive.
-#+begin_src emacs-lisp
-;; (defun locally-defer-font-lock ()
-;;   "Set jit-lock defer and stealth, when buffer is over a certain size."
-;;   (when (> (buffer-size) 50000)
-;;     (setq-local jit-lock-defer-time 0.05
-;;                 jit-lock-stealth-time 1)))
-
-;; (add-hook 'org-mode-hook #'locally-defer-font-lock)
-#+end_src
-Apparently this causes issues with some people, but I haven't noticed anything
-problematic beyond the expected slight delay in some fontification, so until I
-do I'll use the above.
 **** Fontifying Inline Src Blocks
 Org does lovely things with =#+begin_src= blocks, like using font-lock for
 language's major-mode behind the scenes and pulling out the lovely colourful
@@ -2564,7 +2495,6 @@ Doom theme's extra fontification is more problematic than helpful.
 #+end_src
 
 **** Symbols
-
 It's also nice to change the character used for collapsed items (by default ~…~),
 I think ~▾~ is better for indicating 'collapsed section'.
 and add an extra ~org-bullet~ to the default list of four.
@@ -2615,33 +2545,6 @@ It's also nice to make use of the Unicode characters for check boxes, and other 
   :priority_e    "[#E]")
 (plist-put +ligatures-extra-symbols :name "⁍")
 #+end_src
-
-~org-superstar-mode~ is great. While we're at it we may as well make tags prettier as well 🙂
-#+begin_src emacs-lisp :tangle packages.el
-;; (package! org-pretty-tags :pin "5c7521651b35ae9a7d3add4a66ae8cc176ae1c76")
-#+end_src
-
-#+begin_src emacs-lisp
-;; (use-package org-pretty-tags
-;; :config
-;;  (setq org-pretty-tags-surrogate-strings
-;;        `(("uni"        . ,(all-the-icons-faicon   "graduation-cap" :face 'all-the-icons-purple  :v-adjust 0.01))
-;;          ("ucc"        . ,(all-the-icons-material "computer"       :face 'all-the-icons-silver  :v-adjust 0.01))
-;;          ("assignment" . ,(all-the-icons-material "library_books"  :face 'all-the-icons-orange  :v-adjust 0.01))
-;;          ("test"       . ,(all-the-icons-material "timer"          :face 'all-the-icons-red     :v-adjust 0.01))
-;;          ("lecture"    . ,(all-the-icons-fileicon "keynote"        :face 'all-the-icons-orange  :v-adjust 0.01))
-;;          ("email"      . ,(all-the-icons-faicon   "envelope"       :face 'all-the-icons-blue    :v-adjust 0.01))
-;;          ("read"       . ,(all-the-icons-octicon  "book"           :face 'all-the-icons-lblue   :v-adjust 0.01))
-;;          ("article"    . ,(all-the-icons-octicon  "file-text"      :face 'all-the-icons-yellow  :v-adjust 0.01))
-;;          ("web"        . ,(all-the-icons-faicon   "globe"          :face 'all-the-icons-green   :v-adjust 0.01))
-;;          ("info"       . ,(all-the-icons-faicon   "info-circle"    :face 'all-the-icons-blue    :v-adjust 0.01))
-;;          ("issue"      . ,(all-the-icons-faicon   "bug"            :face 'all-the-icons-red     :v-adjust 0.01))
-;;          ("someday"    . ,(all-the-icons-faicon   "calendar-o"     :face 'all-the-icons-cyan    :v-adjust 0.01))
-;;          ("idea"       . ,(all-the-icons-octicon  "light-bulb"     :face 'all-the-icons-yellow  :v-adjust 0.01))
-;;          ("emacs"      . ,(all-the-icons-fileicon "emacs"          :face 'all-the-icons-lpurple :v-adjust 0.01))))
-;;  (org-pretty-tags-global-mode))
-#+end_src
-
 **** LaTeX Fragments
 ***** Prettier Highlighting
 First off, we want those fragments to look good.
@@ -2662,7 +2565,6 @@ passed, and so we can override the background as discussed above.
 (require 'org-src)
 (add-to-list 'org-src-block-faces '("latex" (:inherit default :extend t)))
 #+end_src
-
 ***** More Eager Rendering
 What's better than syntax-highlighted LaTeX is /rendered/ LaTeX though, and we can
 have this be performed automatically with =org-fragtog=.
@@ -2676,7 +2578,6 @@ have this be performed automatically with =org-fragtog=.
 (use-package! org-fragtog
   :hook (org-mode . org-fragtog-mode))
 #+end_src
-
 ***** Prettier Rendering
 It's nice to customise the look of LaTeX fragments so they fit better in the
 text --- like this \(\sqrt{\beta^2+3}-\sum_{\phi=1}^\infty \frac{x^\phi-1}{\Gamma(a)}\).
@@ -2717,36 +2618,6 @@ let's make it transparent.
 (setq org-format-latex-options
       (plist-put org-format-latex-options :background "Transparent"))
 #+end_src
-
-***** Rendering Speed Tests
-We can either render from a ~dvi~ or ~pdf~ file, so let's benchmark ~latex~ and
-~pdflatex~.
-| ~latex~ time | ~pdflatex~ time |
-|------------+---------------|
-| 135 \pm 2 ms | 215 \pm 3 ms    |
-
-On the rendering side, there are two ~.dvi~-to-image converters which I am
-interested in: ~dvipng~ and ~dvisvgm~. Then with the a ~.pdf~ we have ~pdf2svg~.
-For inline preview we care about speed, while for exporting we care about file
-size and prefer a vector graphic.
-
-Using the above latex expression and benchmarking lead to the following results:
-| ~dvipng~ time | ~dvisvgm~ time | ~pdf2svg~ time |
-|-------------+--------------+--------------|
-| 89 \pm 2 ms   | 178 \pm 2 ms   | 12 \pm 2 ms    |
-
-Now let's combine this to see what's best
-| Tool chain         | Total time | Resultant file size |
-|--------------------+------------+---------------------|
-| ~latex~ + ~dvipng~     | 226 \pm 2 ms | 7 KiB               |
-| ~latex~ + ~dvisvgm~    | 392 \pm 4 ms | 8 KiB               |
-| ~pdflatex~ + ~pdf2svg~ | 230 \pm 2 ms | 16 KiB              |
-
-So, let's use ~dvipng~ for previewing LaTeX fragments in-Emacs, but ~dvisvgm~ for [[LaTeX Rendering]].
-
-#+begin_warning
-Unfortunately, it seems that SVG sizing is annoying ATM, so let's actually not do this right now.
-#+end_warning
 
 **** Stolen From [[https://github.com/jkitchin/scimax][scimax]] (semi-working right now)
 I want fragment justification
@@ -2971,65 +2842,6 @@ the creator string.
 #+begin_src emacs-lisp
 (setq org-export-creator-string
       (format "Emacs %s (Org mode %s %s)" emacs-version (org-release) (org-git-version)))
-#+end_src
-
-**** Acronym Formatting
-I like automatically using spaced small caps for acronyms. For strings I want to
-be unaffected let's use ~;~ as a prefix to prevent the transformation --- i.e.
-~;JFK~ (as one would want for two-letter geographic locations and names).
-
-This has to be implemented on a per-format basis, currently HTML and LaTeX
-exports are supported.
-
-#+begin_src emacs-lisp
-(defun org-export-filter-text-acronym (text backend _info)
-  "Wrap suspected acronyms in acronyms-specific formatting.
-Treat sequences of 2+ capital letters (optionally succeeded by \"s\") as an acronym.
-Ignore if preceeded by \";\" (for manual prevention) or \"\\\" (for LaTeX commands).
-
-TODO abstract backend implementations."
-  (let ((base-backend
-         (cond
-          ((org-export-derived-backend-p backend 'latex) 'latex)
-          ;; Markdown is derived from HTML, but we don't want to format it
-          ((org-export-derived-backend-p backend 'md) nil)
-          ((org-export-derived-backend-p backend 'html) 'html)))
-        (case-fold-search nil))
-    (when base-backend
-      (replace-regexp-in-string
-       "[;\\\\]?\\b[A-Z][A-Z]+s?\\(?:[^A-Za-z]\\|\\b\\)"
-       (lambda (all-caps-str)
-         (cond ((equal (aref all-caps-str 0) ?\\) all-caps-str)                ; don't format LaTeX commands
-               ((equal (aref all-caps-str 0) ?\;) (substring all-caps-str 1))  ; just remove not-acronym indicator char ";"
-               (t (let* ((final-char (if (string-match-p "[^A-Za-z]" (substring all-caps-str -1 (length all-caps-str)))
-                                         (substring all-caps-str -1 (length all-caps-str))
-                                       nil)) ; needed to re-insert the [^A-Za-z] at the end
-                         (trailing-s (equal (aref all-caps-str (- (length all-caps-str) (if final-char 2 1))) ?s))
-                         (acr (if final-char
-                                  (substring all-caps-str 0 (if trailing-s -2 -1))
-                                (substring all-caps-str 0 (+ (if trailing-s -1 (length all-caps-str)))))))
-                    (pcase base-backend
-                      ('latex (concat "\\acr{" (s-downcase acr) "}" (when trailing-s "\\acrs{}") final-char))
-                      ('html (concat "<span class='acr'>" acr "</span>" (when trailing-s "<small>s</small>") final-char)))))))
-       text t t))))
-
-(add-to-list 'org-export-filter-plain-text-functions
-             #'org-export-filter-text-acronym)
-
-;; We won't use `org-export-filter-headline-functions' because it
-;; passes (and formats) the entire section contents. That's no good.
-
-(defun org-html-format-headline-acronymised (todo todo-type priority text tags info)
-  "Like `org-html-format-headline-default-function', but with acronym formatting."
-  (org-html-format-headline-default-function
-   todo todo-type priority (org-export-filter-text-acronym text 'html info) tags info))
-(setq org-html-format-headline-function #'org-html-format-headline-acronymised)
-
-(defun org-latex-format-headline-acronymised (todo todo-type priority text tags info)
-  "Like `org-latex-format-headline-default-function', but with acronym formatting."
-  (org-latex-format-headline-default-function
-   todo todo-type priority (org-export-filter-text-acronym text 'latex info) tags info))
-(setq org-latex-format-headline-function #'org-latex-format-headline-acronymised)
 #+end_src
 *** HTML Export
 :PROPERTIES:
@@ -3754,9 +3566,7 @@ While the ~-%latex~ above is slightly hacky (~-pdflatex~ expects to be given a
 value) it allows us to leave ~org-latex-compilers~ unmodified.
 This is nice in case I open an org file that uses =#+LATEX_COMPILER= for example,
 it should still work.
-
 **** Nicer Checkboxes
-
 We'll assume that thanks to the clever preamble the various custom =\checkbox...=
 commands below are defined.
 
@@ -3776,13 +3586,21 @@ commands below are defined.
 (add-to-list 'org-export-filter-item-functions
              '+org-export-latex-fancy-item-checkboxes)
 #+end_src
-
 **** Class Templates
 #+begin_src emacs-lisp :noweb no-export
 (after! ox-latex
   (add-to-list 'org-latex-classes
                '("scr-article"
                  "\\documentclass{scrartcl}"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+  (add-to-list 'org-latex-classes
+               '("technical-book"
+                 "\\documentclass{book}"
+                 ("\\chapter{%s}" . "\\chapter*{%s}")
                  ("\\section{%s}" . "\\section*{%s}")
                  ("\\subsection{%s}" . "\\subsection*{%s}")
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
@@ -3822,7 +3640,6 @@ commands below are defined.
       org-latex-reference-command "\\cref{%s}")
 #+end_src
 
-
 The =hyperref= setup needs to be handled separately however.
 #+name: latex-fancy-hyperref
 #+begin_src LaTeX
@@ -3844,7 +3661,6 @@ The =hyperref= setup needs to be handled separately however.
   citecolor=cite\n}
 \\urlstyle{same}
 #+end_src
-
 **** A Cleverer Preamble
 ***** Use case
 We often want particular snippets of LaTeX in our documents preambles.
@@ -3886,7 +3702,6 @@ Captions could do with a bit of tweaking such that
 #+end_src
 
 The default checkboxes look rather ugly, so let's provide some prettier alternatives.
-
 #+name: org-latex-checkbox-preamble
 #+begin_src LaTeX
 \\newcommand{\\checkboxUnchecked}{$\\square$}
@@ -3896,7 +3711,6 @@ The default checkboxes look rather ugly, so let's provide some prettier alternat
 
 It's nice to have "message blocks", things like info/warning/error/success.
 A LaTeX macro should make them trivial to create.
-
 #+name: org-latex-box-preamble
 #+begin_src LaTeX
 % args = #1 Name, #2 Colour, #3 Ding, #4 Label
@@ -3917,7 +3731,6 @@ A LaTeX macro should make them trivial to create.
 
 Lastly, we will pass this content into some global variables we for ease of
 access.
-
 #+begin_src emacs-lisp :noweb no-export
 (defvar org-latex-embed-files-preamble "
 <<org-latex-embed-files-preamble>>
@@ -3957,7 +3770,6 @@ mapping each tangled file to a form which embeds the file if it exists.
            (org-babel-tangle-collect-blocks)) ; all files being tangled to
    "\n"))
 #+end_src
-
 ***** Content-feature-preamble Association
 Initially this idea was implemented with an alist that associated a construct
 that would search the current Org file for an indication that some feature was
@@ -3976,7 +3788,6 @@ the feature.
 
 This model also provides a number of nice secondary benefits, such as a simple
 implementation of feature dependency.
-
 #+begin_src dot :file media/org-latex-clever-preamble.svg :exports none
 digraph {
     graph [bgcolor="transparent"];
@@ -4142,9 +3953,7 @@ following keys:
 
 Features that start with ! will be eagerly loaded, i.e. without being detected.")
 #+end_src
-
 ***** Feature Determination
-
 Now that we have ~org-latex-conditional-features~ defined, we need to use it to
 extract a list of features found in an Org buffer.
 
@@ -4169,9 +3978,7 @@ extract a list of features found in an Org buffer.
                    (if (listp (cdr construct-feature)) (cdr construct-feature) (list (cdr construct-feature)))))
                org-latex-conditional-features)))))
 #+end_src
-
 ***** Preamble Generation
-
 Once a list of required features has been determined, we want to use
 ~org-latex-feature-implementations~ to generate the LaTeX which should be inserted
 into the preamble to provide those features.
@@ -4268,7 +4075,6 @@ Then Org needs to be advised to actually use this generated preamble content.
 My use of ~info--tmp~ is somewhat hacky. When I try to upstream this, this should
 become much cleaner as I can pass info through by directly modifying
 ~org-latex-make-preamble~.
-
 ***** Reduce Default Packages
 Thanks to our additions, we can remove a few packages from
 ~org-latex-default-packages-alist~.
@@ -4286,7 +4092,7 @@ There are also some obsolete entries in the default value, specifically
 #+end_src
 **** Font Collections
 Using the lovely conditional preamble, I'll define a number of font collections
-that can be used for LaTeX exports. Who knows, maybe I'll use it with other
+that can be used for \LaTeX exports. Who knows, maybe I'll use it with other
 export formats too at some point.
 
 To start with I'll create a default state variable and register =fontset= as part
@@ -4304,12 +4110,12 @@ If \"nil\" no custom fonts will ever be used.")
                    (org-export-backend-options (org-export-get-backend 'latex))))
 #+end_src
 
-Then a function is needed to generate a LaTeX snippet which applies the fontset. It
+Then a function is needed to generate a \LaTeX snippet which applies the fontset. It
 would be nice if this could be done for individual styles and use different
 styles as the main document font. If the individual typefaces for a fontset are
 defined individually as
 src_elisp{:serif}, src_elisp{:sans}, src_elisp{:mono}, and src_elisp{:maths}.
-I can use those to generate LaTeX for subsets of the full fontset. Then, if I
+I can use those to generate \LaTeX for subsets of the full fontset. Then, if I
 don't let any fontset names have =-= in them, I can use =-sans= and =-mono= as
 suffixes that specify the document font to use.
 
@@ -4586,7 +4392,6 @@ Then we can just hook this in with our clever preamble.
 #+end_src
 
 **** Pretty Code Blocks
-
 We could just use minted for syntax highlighting --- however, we can do better!
 The =engrave-faces= package lets us use Emacs' font-lock for syntax highlighting,
 exporting that as LaTeX commands.
@@ -4809,208 +4614,6 @@ case.
 Treating the verbatim (no syntax highlighting) result as a baseline; this
 rudimentary test suggest that =engrave-faces= is around eight times faster than
 =pygments=, and takes three times as long as no syntax highlighting (verbatim).
-
-# **** Julia code blocks
-
-Julia code has fantastic support for unicode! The downside is that =pdflatex= is
-/still/ a pain to use with unicode symbols. The solution --- =lualatex=. Now we just
-need to make it automatic
-
-#+begin_src emacs-lisp
-(defadvice! org-latex-pick-compiler (_contents info)
-  :before #'org-latex-template
-  (when (and org-export-has-code-p (memq 'julia-code (org-latex-detect-features)))
-    (setf info (plist-put
-                (if (member #'+org-latex-replace-non-ascii-chars (plist-get info :filter-final-output))
-                    (plist-put info :filter-final-output
-                               (delq #'+org-latex-replace-non-ascii-chars (plist-get info :filter-final-output)))
-                  info)
-                :latex-compiler "lualatex"))))
-#+end_src
-
-Then a font with unicode support must be used. JuliaMono is the obvious choice,
-and we can use it with the =fontspec= package. In future it may be nice to set
-this just as a fallback font (when it isn't a pain to do so).
-
-#+name: julia-mono-fontspec
-#+begin_src LaTeX
-\\usepackage{fontspec}
-\\newfontfamily\\JuliaMono{JuliaMono-Regular.ttf}[Path=/usr/share/fonts/truetype/, Extension=.ttf]
-\\newfontface\\JuliaMonoRegular{JuliaMono-Regular}
-\\setmonofont{JuliaMonoRegular}[Contextuals=Alternate, Scale=MatchLowercase]
-#+end_src
-
-Now all that remains is to hook this into the preamble generation.
-
-#+begin_src emacs-lisp :noweb no-export
-(setq org-latex-julia-mono-fontspec "
-<<julia-mono-fontspec>>
-")
-
-(add-to-list 'org-latex-feature-implementations '(julia-code :snippet org-latex-julia-mono-fontspec :order 0) t)
-(add-to-list 'org-latex-conditional-features '((and org-export-has-code-p "^[ \t]*#\\+begin_src julia\\|^[ \t]*#\\+BEGIN_SRC julia\\|src_julia") . julia-code) t)
-
-(add-to-list 'org-latex-feature-implementations '(.microtype-lualatex :eager t :when (microtype julia-code) :prevents microtype :order 0.1 :snippet "\\usepackage[activate={true,nocompatibility},final,tracking=true,factor=2000]{microtype}\n"))
-(add-to-list 'org-latex-feature-implementations '(.custom-font-no-mono :eager t :prevents custom-font :order 0 :snippet (org-latex-fontset :serif :sans)) t)
-#+end_src
-
-**** Emojis
-It would be nice to actually include emojis where used.
-Thanks to =emojify=, we have a folder of emoji images just sitting and waiting to
-be used 🙂.
-
-First up, we want to detect when emojis are actually present. We can try
-checking the unicode ranges with a collection of =[?-?]= regex groups, but Emojis
-are actually spread around a fair bit and so this isn't very straightforward.
-Instead I can iterate thorough non-ASCII characters and check if any have the
-text property =emojified=.
-
-#+begin_src emacs-lisp
-(defun emojify-emoji-in-buffer-p ()
-  "Determine if any emojis are present in the current buffer, using `emojify-mode'."
-  (unless emojify-mode
-    (emojify-mode 1)
-    (emojify-display-emojis-in-region (point-min) (point-max)))
-  (let (emoji-found end)
-    (save-excursion
-      (goto-char (point-min))
-      (while (not (or emoji-found end))
-        (if-let ((pos (re-search-forward "[^[:ascii:]]" nil t)))
-            (when (get-text-property (1- pos) 'emojified)
-              (setq emoji-found t))
-          (setq end t))))
-    emoji-found))
-#+end_src
-
-Once we know that there are emojis present we can add a bit of preamble to the
-buffer to make insertion easier.
-
-#+begin_src emacs-lisp
-(defun org-latex-emoji-setup ()
-  (format "\\newcommand\\emoji[1]{\\raisebox{-0.3ex}{\\includegraphics[height=1.8ex]{%s/#1}}}" (emojify-image-dir)))
-
-(add-to-list 'org-latex-conditional-features '((emojify-emoji-in-buffer-p) . emoji) t)
-(add-to-list 'org-latex-feature-implementations '(emoji :requires image :snippet (org-latex-emoji-setup) :order 3 ))
-#+end_src
-
-Once again making use of =emojify=, we can generate LaTeX commands for our emojis
-fairly easily.
-
-#+begin_src emacs-lisp
-(defun emojify-latexify-emoji-in-buffer ()
-  (unless emojify-mode
-    (emojify-mode 1)
-    (emojify-display-emojis-in-region (point-min) (point-max)))
-  (let (end)
-    (save-excursion
-      (goto-char (point-min))
-      (while (not end)
-        (if-let ((pos (re-search-forward "[^[:ascii:]]\\{1,2\\}" nil t)))
-            (when-let ((char (get-text-property (1- pos) 'emojify-text))
-                       (emoji (emojify-get-emoji char)))
-              (replace-match (format "\\\\emoji{%s}" (file-name-sans-extension (ht-get emoji "image")))))
-          (setq end t))))))
-#+end_src
-
-Now we just need to hook this handy function into Org's export.
-We can't use standard string-replacement as we rely on the buffer modifications
-enacted by src_elisp{(emojify-mode)}.
-
-As I have not yet implemented a nice way of sharing feature detection
-information outside of src_elisp{(org-latex-generate-features-preamble)}, we'll
-use the same check before attempting to LaTeXify emojis and hope that nothing
-strange happens.
-
-#+begin_src emacs-lisp
-(defun +org-latex-convert-emojis (text backend _info)
-  (when (org-export-derived-backend-p backend 'latex)
-    (with-temp-buffer
-      (insert text)
-      (when (emojify-emoji-in-buffer-p)
-        (emojify-latexify-emoji-in-buffer)
-        (buffer-string)))))
-
-(add-to-list 'org-export-filter-final-output-functions #'+org-latex-convert-emojis)
-#+end_src
-
-This works fairly nicely, there's just one little QOL upgrade that we can
-perform. =emojify= downloads the ~72x72~ versions of Twemoji, however SVG versions
-are also produced. We could use ~inkscape~ to convert those to PDFs, which would
-likely be best for including.
-
-First, it's worth checking whether =.pdf= graphics files will be prioritised over
-=.png= files. If so, that would be ideal as no extra effort is required past
-fetching and converting the files.
-
-#+begin_src shell :tangle no :exports both :results output verbatim :wrap example
-texdef -t pdflatex -p graphicx Gin@extensions
-#+end_src
-
-#+RESULTS:
-#+begin_example
-\Gin@extensions:
-macro:->.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
-#+end_example
-
-Fantastic! We can see that =.pdf= actually comes first in the priority list. So
-now we just need to fetch and convert those SVGs --- ideally with a handy
-command to do so for us.
-
-#+begin_src emacs-lisp
-(defun org-latex-emoji-install-vector-graphics ()
-  "Dowload, convert, and install vector emojis for use with LaTeX."
-  (interactive)
-  (let ((dir (org-latex-emoji-install-vector-graphics--download)))
-    (org-latex-emoji-install-vector-graphics--convert dir)
-    (org-latex-emoji-install-vector-graphics--install dir))
-  (message "Vector emojis installed."))
-
-(defun org-latex-emoji-install-vector-graphics--download ()
-  (message "Locating latest emojis...")
-  (let* ((twemoji-url (substring (shell-command-to-string "echo \"https://github.com$(curl -sL https://github.com/twitter/twemoji/releases/latest | grep '.zip\"' | cut -d '\"' -f 2)\"") 0 -1))
-         (twemoji-version (replace-regexp-in-string "^.*tags/v\\(.*\\)\\.zip" "\\1" twemoji-url))
-         (twemoji-dest-folder (make-temp-file "twemoji-" t)))
-    (message "Downloading Twemoji v%s" twemoji-version)
-    (let ((default-directory twemoji-dest-folder))
-      (call-process "curl" nil nil nil "-L" twemoji-url "--output" "twemoji.zip")
-      (message "Unzipping")
-      (call-process "unzip" nil nil nil "twemoji.zip")
-      (concat twemoji-dest-folder "/twemoji-" twemoji-version "/assets/svg"))))
-
-(defun org-latex-emoji-install-vector-graphics--convert (dir)
-  (let ((default-directory dir))
-    (if (executable-find "cairosvg") ; cairo's PDFs are ~10% smaller
-        (let* ((images (directory-files dir nil ".*.svg"))
-               (num-images (length images))
-               (index 0)
-               (max-threads (1- (string-to-number (shell-command-to-string "nproc"))))
-               (threads 0))
-          (while (< index num-images)
-            (setf threads (1+ threads))
-            (message "Converting emoji %d/%d (%s)" (1+ index) num-images (nth index images))
-            (make-process :name "cairosvg"
-                          :command (list "cairosvg" (nth index images) "-o" (concat (file-name-sans-extension (nth index images)) ".pdf"))
-                          :sentinel (lambda (proc msg)
-                                      (when (memq (process-status proc) '(exit signal))
-                                        (setf threads (1- threads)))))
-            (setq index (1+ index))
-            (while (> threads max-threads)
-              (sleep-for 0.01)))
-          (while (> threads 0)
-            (sleep-for 0.01))
-          (message "Finished conversion!")))
-    (shell-command "inkscape --batch-process --export-type='pdf' *.svg")))
-
-(defun org-latex-emoji-install-vector-graphics--install (dir)
-  (message "Installing vector emojis into emoji directory")
-  (let ((images (directory-files dir t ".*.pdf"))
-        (emoji-dir (concat (emojify-image-dir) "/")))
-    (mapcar
-     (lambda (image)
-       (rename-file image emoji-dir t))
-     images)))
-#+end_src
-
 **** Remove Non-ASCII Characters
 When using ~pdflatex~, almost non-ascii characters are generally problematic, and
 don't appear in the pdf. It's preferable to see that there was /some/ character
@@ -5377,109 +4980,6 @@ locally binding ~auto-mode-alist~ to ~nil~.
   :around #'org-export-to-file
   (let ((auto-mode-alist nil))
     (apply orig-fn args)))
-#+end_src
-**** Check For Required Packages
-For how I've setup Org's LaTeX export, the following packages are needed:
-#+name: org-latex-required-packages-list
-+ adjustbox
-+ arev
-+ amsmath
-+ booktabs
-+ cancel
-+ capt-of
-+ caption
-+ cleveref
-+ embedall
-+ fourier
-+ fvextra
-+ gillius
-+ graphicx
-+ hyperref
-+ mathalpha
-+ mathtools
-+ microtype
-+ pdfx
-+ pifont
-+ preview
-+ siunitx
-+ soul
-+ subcaption
-+ svg
-+ tcolorbox
-+ xcolor
-+ xparse
-
-Then for the various fontsets:
-#+name: org-latex-font-packages-list
-+ Alegreya
-+ biolinum
-+ FiraMono
-+ FiraSans
-+ kpfonts
-+ libertine
-+ newpxmath
-+ newpxtext
-+ newtxmath
-+ newtxtext
-+ newtxsf
-+ noto
-+ plex-mono
-+ plex-sans
-+ plex-serif
-+ sourcecodepro
-+ sourcesanspro
-+ sourceserifpro
-
-We can write a function which will check for each of these packages with
-=kpsewhich=, and then if any of them are missing we'll inject some advice into the
-generated config that gets a list of missing packages and warns us every time we
-export to a PDF.
-
-#+name: org-missing-latex-packages
-#+begin_src emacs-lisp :noweb-ref none :var org-latex-required-packages-list=org-latex-required-packages-list :var org-latex-font-packages-list=org-latex-font-packages-list
-(setq org-required-latex-packages (append (mapcar #'car org-latex-required-packages-list)
-                                          (mapcar #'car org-latex-font-packages-list)))
-
-(defun check-for-latex-packages (packages)
-  (delq nil (mapcar (lambda (package)
-                      (unless
-                          (= 0 (shell-command (format "kpsewhich %s.sty" package)))
-                        package))
-                    packages)))
-
-(if-let ((missing-pkgs (check-for-latex-packages org-required-latex-packages)))
-    (concat
-     (pp-to-string `(setq org-required-latex-packages ',org-required-latex-packages))
-     (message ";; Detected missing LaTeX packages: %s\n" (mapconcat #'identity missing-pkgs ", "))
-     (pp-to-string
-      '(defun check-for-latex-packages (packages)
-         (delq nil (mapcar (lambda (package)
-                             (unless
-                                 (= 0 (shell-command (format "kpsewhich %s.sty" package)))
-                               package))
-                           packages))))
-     (pp-to-string
-      '(defun +org-warn-about-missing-latex-packages (&rest _)
-         (message "Checking for missing LaTeX packages...")
-         (sleep-for 0.4)
-         (if-let (missing-pkgs (check-for-latex-packages org-required-latex-packages))
-             (message "%s You are missing the following LaTeX packages: %s."
-                      (propertize "Warning!" 'face '(bold warning))
-                      (mapconcat (lambda (pkg) (propertize pkg 'face 'font-lock-variable-name-face))
-                                 missing-pkgs
-                                 ", "))
-           (message "%s You have all the required LaTeX packages. Run %s to make this message go away."
-                    (propertize "Success!" 'face '(bold success))
-                    (propertize "doom sync" 'face 'font-lock-keyword-face))
-           (advice-remove 'org-latex-export-to-pdf #'+org-warn-about-missing-latex-packages))
-         (sleep-for 1)))
-     (pp-to-string
-      '(advice-add 'org-latex-export-to-pdf :before #'+org-warn-about-missing-latex-packages)))
-  ";; No missing LaTeX packags detected")
-#+end_src
-
-#+begin_src emacs-lisp :noweb no-export
-<<org-missing-latex-packages()>>
 #+end_src
 ** LaTeX
 *** To-be-implemented ideas
