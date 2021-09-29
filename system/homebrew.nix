@@ -46,6 +46,7 @@
       "hammerspoon"
       "iina"
       "karabiner-elements"
+      "macfuse"
       "maintenance"
       "openconnect-gui"
       "openvpn-connect"
