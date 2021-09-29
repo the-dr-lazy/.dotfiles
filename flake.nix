@@ -17,7 +17,7 @@
 
   outputs = { nixpkgs, utils, home-manager, darwin, ... }:
     {
-      packages.x86_64-darwin.darwinConfigurations.Mohammads-Air = darwin.lib.darwinSystem {
+      packages.x86_64-darwin.darwinConfigurations.Mohammads-MacBook-Air = darwin.lib.darwinSystem {
         modules = [
           home-manager.darwinModules.home-manager
           (import ./system)
