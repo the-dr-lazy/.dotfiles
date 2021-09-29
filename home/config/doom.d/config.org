@@ -1565,6 +1565,7 @@ structure has come to my attention.
 (setq org-directory "~/.org"                      ; let's put files here
       org-use-property-inheritance t              ; it's convenient to have properties inherited
       org-log-done 'time                          ; having the time a item is done sounds convenient
+      org-log-into-drawer t
       org-list-allow-alphabetical t               ; have a. A. a) A) list bullets
       org-export-in-background t                  ; run export processes in external emacs process
       org-catch-invisible-edits 'smart            ; try not to accidently do weird stuff in invisible regions
@@ -1603,6 +1604,32 @@ There also seem to be a few keybindings which use =hjkl=, but miss arrow key equ
       :n "g <left>" #'org-up-element
       :n "g <right>" #'org-down-element)
 #+end_src
+
+I don't like the default ToDo keywords and its face!
+#+begin_src emacs-lisp
+(setq org-todo-keywords
+      '((sequence
+         "TODO(t)"      ; A task that needs doing & is ready to do
+         "NEXT(n)"      ; A task that needs doing in future
+         "STUDY(s)"     ; A topic that needs to study
+         "|"
+         "DONE(d!)"     ; Task successfully completed
+         "ABORT(a@/!)") ; Task was aborted and is no longer applicable
+        (sequence
+           "[ ](T)"    ; A task that needs doing
+           "[-](S)"    ; Task is in progress
+           "[?](W)"    ; Task is being held up or paused
+           "|"
+           "[X](D)"))) ; Task was completed
+
+(setq org-todo-keyword-faces
+        '(("TODO"  . +org-todo-active)
+          ("NEXT"  . +org-todo-active)
+          ("STUDY" . +org-todo-active)
+          ("ABORT" . +org-todo-cancel)
+          ))
+#+end_src
+
 **** Extra Functionality
 ***** List Bullet Sequence
 I think it makes sense to have list bullets change with depth
@@ -1770,6 +1797,27 @@ functionality as in LaTeX. Let's try viewing possible output files with this.
 (defvar org-view-external-file-extensions '("html")
   "File formats that should be opened externally.")
 #+end_src
+**** Capture Templates
+#+begin_src emacs-lisp :noweb-ref none :tangle packages.el
+(package! doct)
+#+end_src
+
+Let's keep the capture templates simple stupid.
+#+begin_src emacs-lisp
+(setq org-capture-templates
+      (doct '(("Task" :keys "t"
+               :file "~/org/agenda.org"
+               :prepend t
+               :headline "Tasks"
+               :template ("* %{todo-state} %^{Description}"
+                          ":PROPERTIES:"
+                          ":Created: %U"
+                          ":END:"
+                          "%?")
+               :children (("ToDo" :keys "t" :todo-state "TODO")
+                          ("Next" :keys "n" :todo-state "NEXT"))))))
+#+end_src
+
 **** Super Agenda
 The agenda is nice, but a souped up version is nicer.
 #+begin_src emacs-lisp :noweb-ref none :tangle packages.el
@@ -1791,67 +1839,14 @@ The agenda is nice, but a souped up version is nicer.
       org-agenda-include-deadlines t
       org-agenda-block-separator nil
       org-agenda-tags-column 100 ;; from testing this seems to be a good value
-      org-agenda-compact-blocks t)
+      org-agenda-compact-blocks t
+      org-agenda-start-with-log-mode t)
+
 
 (setq org-agenda-custom-commands
       '(("o" "Overview"
-         ((agenda "" ((org-agenda-span 'day)
-                      (org-super-agenda-groups
-                       '((:name "Today"
-                          :time-grid t
-                          :date today
-                          :todo "TODAY"
-                          :scheduled today
-                          :order 1)))))
-          (alltodo "" ((org-agenda-overriding-header "")
-                       (org-super-agenda-groups
-                        '((:name "Next to do"
-                           :todo "NEXT"
-                           :order 1)
-                          (:name "Important"
-                           :tag "Important"
-                           :priority "A"
-                           :order 6)
-                          (:name "Due Today"
-                           :deadline today
-                           :order 2)
-                          (:name "Due Soon"
-                           :deadline future
-                           :order 8)
-                          (:name "Overdue"
-                           :deadline past
-                           :face error
-                           :order 7)
-                          (:name "Assignments"
-                           :tag "Assignment"
-                           :order 10)
-                          (:name "Issues"
-                           :tag "Issue"
-                           :order 12)
-                          (:name "Emacs"
-                           :tag "Emacs"
-                           :order 13)
-                          (:name "Projects"
-                           :tag "Project"
-                           :order 14)
-                          (:name "Research"
-                           :tag "Research"
-                           :order 15)
-                          (:name "To read"
-                           :tag "Read"
-                           :order 30)
-                          (:name "Waiting"
-                           :todo "WAITING"
-                           :order 20)
-                          (:name "University"
-                           :tag "uni"
-                           :order 32)
-                          (:name "Trivial"
-                           :priority<= "E"
-                           :tag ("Trivial" "Unimportant")
-                           :todo ("SOMEDAY" )
-                           :order 90)
-                          (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
+         ((agenda "" ())
+          (todo "NEXT" ((org-agenda-overriding-header "Next Tasks")))))))
 #+end_src
 **** Nicer Heading IDs Generation
 Thanks to alphapapa's [[https://github.com/alphapapa/unpackaged.el#export-to-html-with-useful-anchors][unpackaged.el]].
