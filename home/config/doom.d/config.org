@@ -914,18 +914,6 @@ From the =:core packages= module.
  "<<" ">>"
  :actions '(insert))
 #+end_src
-*** Direnv
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! inheritenv)
-#+end_src
-
-#+begin_src emacs-lisp
-;;(use-package! inheritenv
-;;  :config
-;;  (inheritenv-add-advice 'shell-command-to-string))
-#+end_src
-
 ** Visuals
 *** LSP
 #+begin_src emacs-lisp
