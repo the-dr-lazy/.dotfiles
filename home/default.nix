@@ -72,6 +72,7 @@
     act
     m-cli
     git
+    hledger
 
     # Natural Language
     languagetool
