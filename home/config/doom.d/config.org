@@ -1834,7 +1834,27 @@ The agenda is nice, but a souped up version is nicer.
 (setq org-agenda-custom-commands
       '(("o" "Overview"
          ((agenda "" ())
-          (todo "NEXT" ((org-agenda-overriding-header "Next Tasks")))))))
+          (alltodo "" ((org-agenda-overriding-header "")
+                         (org-super-agenda-groups
+                          '((:log t)
+                            (:name "Next to do"
+                                   :todo "NEXT"
+                                   :order 1)
+                            (:name "Important"
+                                   :priority "A"
+                                   :order 6)
+                            (:name "Today's tasks"
+                                   :file-path "roam/daily/")
+                            (:name "Due Today"
+                                   :deadline today
+                                   :order 2)
+                            (:name "Scheduled Soon"
+                                   :scheduled future
+                                   :order 8)
+                            (:name "Overdue"
+                                   :deadline past
+                                   :order 7)
+                            (:discard (:not (:todo "TODO")))))))))))
 #+end_src
 **** Nicer Heading IDs Generation
 Thanks to alphapapa's [[https://github.com/alphapapa/unpackaged.el#export-to-html-with-useful-anchors][unpackaged.el]].
