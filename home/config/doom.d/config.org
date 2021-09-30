@@ -311,6 +311,7 @@ rest              ; Emacs as a REST client
  +html)
 yaml                         ; JSON, but readable
 dhall
+ledger
 #+end_src
 **** Everything In Emacs
 It's just too convenient being able to have everything in Emacs.

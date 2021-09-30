@@ -72,6 +72,7 @@
     act
     m-cli
     git
+    ledger
     hledger
 
     # Natural Language
