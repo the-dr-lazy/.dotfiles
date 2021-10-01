@@ -930,6 +930,11 @@ From the =:core packages= module.
         lsp-ui-doc-border "#ffffff")
   (set-face-background 'lsp-ui-doc-background "#191b2e"))
 
+(after! lsp-mode
+  (setq lsp-signature-auto-activate nil
+        lsp-signature-render-documentation nil
+        lsp-eldoc-hook nil))
+
 (setq +lookup-open-url-fn #'+lookup-xwidget-webkit-open-url-fn)
 #+end_src
 *** Info Colours
