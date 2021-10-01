@@ -29,6 +29,14 @@ direnv hook fish | source
 starship init fish | source
 
 ######################################################
+## Tools
+
+function rebuild
+  env -C $HOME darwin-rebuild switch --flake $DOTFILES
+  rm -rf $HOME/result
+end
+
+######################################################
 ## Greeting
 
 function fish_greeting
