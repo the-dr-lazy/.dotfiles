@@ -5,6 +5,7 @@ set PAGER less
 set LESS "-R"
 set DOTFILES "$HOME/Projects/github/the-dr-lazy/.dotfiles"
 set DOOM_DIR "$HOME/.doom.d"
+set LEDGER_FILE "$DOTFILES/home/org/books.ledger"
 
 if test -e $HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
   set -x SSH_AUTH_SOCK $HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
