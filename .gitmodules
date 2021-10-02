@@ -14,3 +14,7 @@
   path = home/ssh
   url = https://the-dr-lazy@bitbucket.org/the_dr_lazy/.ssh.git
   branch = master
+[submodule "private"]
+  path = home/private
+  url = me@bitbucket/private.git
+  branch = master
