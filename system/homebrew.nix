@@ -58,6 +58,7 @@
       "the-unarchiver"
       "visual-studio-code"
       "whatsapp"
+      "discord"
       # "android-file-transfer"
       # "secretive"
     ];
