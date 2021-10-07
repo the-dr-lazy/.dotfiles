@@ -33,6 +33,7 @@
     casks = [
       "alacritty"
       "bitwarden"
+      "discord"
       "docker"
       "dropbox"
       "eloston-chromium"
@@ -51,6 +52,7 @@
       "openconnect-gui"
       "openvpn-connect"
       "postico"
+      "skim"
       "skype"
       "steam"
       "telegram"
@@ -58,7 +60,6 @@
       "the-unarchiver"
       "visual-studio-code"
       "whatsapp"
-      "discord"
       # "android-file-transfer"
       # "secretive"
     ];
