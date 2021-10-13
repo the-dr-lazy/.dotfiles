@@ -5412,29 +5412,31 @@ From the =:lang web= module.
 Pretty symbols support.
 #+begin_src emacs-lisp
 (dolist (feature '(rjsx-mode
-	               typescript-mode
-	               web-mode
+                   typescript-mode
+                   typescript-tsx-mode
+                   web-mode
+                   js2-mode
                    (nodejs-repl-mode . nodejs-repl)))
   (let ((pkg  (or (cdr-safe feature) feature))
-	    (mode (or (car-safe feature) feature)))
+        (mode (or (car-safe feature) feature)))
     (with-eval-after-load pkg
       (set-ligatures! mode
         ;; Functional
-	    :defalt "delta"
-	    :lambda "() =>"
-	    :function "function"
-	    ;; Logical
-	    :not "!"
-	    :and "&&"
-	    :or "||"
-	    :import "import"
-	    :export "export"
-	    ;; Types
-	    :int "number"
-	    :bool "boolean"
-	    :true "true"
-	    :false "false"
-	    :bottom "throw"
-	    ;; Brand
-	    :monarch "Monarch"))))
+        :defalt "delta"
+        :lambda "() =>"
+        :function "function"
+        ;; Logical
+        :not "!"
+        :and "&&"
+        :or "||"
+        :import "import"
+        :export "export"
+        ;; Types
+        :int "number"
+        :bool "boolean"
+        :true "true"
+        :false "false"
+        :bottom "throw"
+        ;; Brand
+        :monarch "Monarch"))))
 #+end_src
