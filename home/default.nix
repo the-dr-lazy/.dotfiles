@@ -27,80 +27,108 @@
   programs.man.enable = true;
   programs.info.enable = true;
 
-  home.packages = with pkgs; [
-    # Nix
-    nixpkgs-fmt
-    nix-prefetch-git
-    niv
-    cachix
+  home.packages = builtins.concatMap builtins.attrValues [
+    ###################################################
+    # Nix:
+    {
+      inherit (pkgs)
+        nixpkgs-fmt
+        nix-prefetch-git
+        niv
+        cachix;
+    }
 
-    # Basic GNU uitls
-    coreutils
-    findutils
-    diffutils
-    mailutils
-    gawk
-    gnumake
-    automake
-    less
-    watch
-    wget
-    curlFull
-    fd
-    file
-    gnupg
-    glib
-    cmake
-    libtool
+    ###################################################
+    # Basic GNU uitls:
+    {
+      inherit (pkgs)
+        coreutils
+        findutils
+        diffutils
+        mailutils
+        gawk
+        gnumake
+        automake
+        less
+        watch
+        wget
+        curlFull
+        fd
+        file
+        gnupg
+        glib
+        cmake
+        libtool;
+    }
 
-    # CLI
-    colordiff
-    pkg-config
-    bindfs
-    direnv
-    cloc
-    entr
-    harfbuzz
-    ripgrep
-    pass
-    poppler
-    youtube-dl
-    jq
-    tree
-    tldr
-    tmate
-    act
-    m-cli
-    git
-    ledger
-    hledger
+    ###################################################
+    # Command line tools:
+    {
+      inherit (pkgs)
+        colordiff
+        pkg-config
+        bindfs
+        direnv
+        cloc
+        entr
+        harfbuzz
+        ripgrep
+        pass
+        poppler
+        youtube-dl
+        jq
+        tree
+        tldr
+        tmate
+        act
+        m-cli
+        git
+        ledger
+        hledger
+        docker-compose
 
-    # Natural Language
-    languagetool
-    (aspellWithDicts (ds: with ds; [ en en-science en-computers fa ]))
+        ;
+      inherit (pkgs.stable.nodePackages) prettier;
+    }
 
+    ###################################################
+    # Natural Language:
+    {
+      inherit (pkgs) languagetool;
+      aspell = pkgs.aspellWithDicts (ds: with ds; [ en en-science en-computers fa ]);
+    }
+
+    ###################################################
     # Cryptography
-    bitwarden-cli
-    openssh
-    openssl
+    {
+      inherit (pkgs)
+        bitwarden-cli
+        openssh
+        openssl;
+    }
 
-    # Tools
-    docker-compose
-
+    ###################################################
     # C
-    gcc
-    llvm
+    {
+      inherit (pkgs) gcc
+        llvm;
+    }
 
+    ###################################################
     # Emacs
-    sqlite
-    editorconfig-core-c
-    pywal
-    (pkgs.texlive.combine { inherit (pkgs.texlive) scheme-full; })
-    delta
-    pandoc
+    {
+      inherit (pkgs)
+        sqlite
+        editorconfig-core-c
+        pywal
+        delta
+        pandoc;
+      text = pkgs.texlive.combine { inherit (pkgs.texlive) scheme-full; };
+    }
 
+    ###################################################
     # Vim
-    vim
+    { inherit (pkgs) vim; }
   ];
 
   programs.direnv = {
