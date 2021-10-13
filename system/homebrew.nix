@@ -49,6 +49,7 @@
       "karabiner-elements"
       "macfuse"
       "maintenance"
+      "nordvpn"
       "openconnect-gui"
       "openvpn-connect"
       "postico"
