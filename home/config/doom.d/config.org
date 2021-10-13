@@ -243,8 +243,8 @@ vterm                        ; the best terminal emulation in Emacs
 syntax                       ; tasing you for every semicolon you forget
 (:if (executable-find "aspell")
  (spell         ; tasing you for misspelling mispelling
-  +aspell       ; Use aspell as a backend for correcting words.
-  +everywhere)) ; Spell check in programming modes as well (in comments).
+  +aspell))     ; Use aspell as a backend for correcting words.
+;;  +everywhere)) ; Spell check in programming modes as well (in comments).
 grammar                      ; tasing grammar mistake every you make
 #+end_src
 
