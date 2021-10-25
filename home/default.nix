@@ -32,64 +32,64 @@
     # Nix:
     {
       inherit (pkgs)
-        nixpkgs-fmt
-        nix-prefetch-git
+        cachix
         niv
-        cachix;
+        nix-prefetch-git
+        nixpkgs-fmt;
     }
 
     ###################################################
     # Basic GNU uitls:
     {
       inherit (pkgs)
-        coreutils
-        findutils
-        diffutils
-        mailutils
-        gawk
-        gnumake
         automake
-        less
-        watch
-        wget
+        cmake
+        coreutils
         curlFull
+        diffutils
         fd
         file
-        gnupg
+        findutils
+        gawk
         glib
-        cmake
-        libtool;
+        gnumake
+        gnupg
+        less
+        libtool
+        mailutils
+        watch
+        wget;
     }
 
     ###################################################
     # Command line tools:
     {
       inherit (pkgs)
-        colordiff
-        pkg-config
+        act
         bindfs
-        direnv
         cloc
+        colordiff
+        direnv
+        docker-compose
         entr
+        git
         harfbuzz
-        ripgrep
-        nmap
-        pass
-        poppler
-        youtube-dl
+        hledger
         jq
-        tree
+        ledger
+        m-cli
+        nmap
+        pandoc
+        pass
+        pkg-config
+        poppler
+        ripgrep
         tldr
         tmate
-        act
-        m-cli
-        git
-        ledger
-        hledger
-        docker-compose
+        tree
+        youtube-dl;
 
-        ;
-      inherit (pkgs.stable.nodePackages) prettier;
+      inherit (pkgs.nodePackages) prettier;
     }
 
     ###################################################
@@ -111,19 +111,18 @@
     ###################################################
     # C
     {
-      inherit (pkgs) gcc
-        llvm;
+      inherit (pkgs) gcc llvm;
     }
 
     ###################################################
     # Emacs
     {
       inherit (pkgs)
-        sqlite
+        delta
         editorconfig-core-c
         pywal
-        delta
-        pandoc;
+        sqlite;
+
       text = pkgs.texlive.combine { inherit (pkgs.texlive) scheme-full; };
     }
 
