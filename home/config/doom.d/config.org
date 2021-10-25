@@ -5409,8 +5409,24 @@ sixth greyed out. Since the sixth level is so small, I'll turn up the boldness a
 From the =:lang web= module.
 #+end_quote
 
+#+begin_src emacs-lisp :tangle packages.el
+(package! prettier)
+#+end_src
+
 Pretty symbols support.
 #+begin_src emacs-lisp
+(add-hook! 'after-init-hook
+           (progn
+  (setq-hook! 'typescript-mode-hook +format-with :nil)
+  (add-hook! 'typescript-mode-hook 'prettier-mode)
+  (setq-hook! 'rjsx-mode-hook +format-with :nil)
+  (add-hook! 'rjsx-mode-hook 'prettier-mode)
+  (setq-hook! 'js2-mode-hook +format-with :nil)
+  (add-hook! 'js2-mode-hook 'prettier-mode)
+  (setq-hook! 'typescript-tsx-mode-hook +format-with :nil)
+  (add-hook! 'typescript-tsx-mode-hook 'prettier-mode)
+  ))
+
 (dolist (feature '(rjsx-mode
                    typescript-mode
                    typescript-tsx-mode
