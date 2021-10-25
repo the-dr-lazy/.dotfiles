@@ -73,6 +73,7 @@
         entr
         harfbuzz
         ripgrep
+        nmap
         pass
         poppler
         youtube-dl
