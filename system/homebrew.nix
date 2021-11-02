@@ -32,6 +32,7 @@
 
     casks = [
       "alacritty"
+      "beekeeper-studio"
       "bitwarden"
       "discord"
       "docker"
