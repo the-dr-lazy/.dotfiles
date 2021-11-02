@@ -53,6 +53,7 @@
       "openconnect-gui"
       "openvpn-connect"
       "postico"
+      "postman"
       "skim"
       "skype"
       "steam"
