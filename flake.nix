@@ -26,7 +26,12 @@
 
       templates.web = {
         path = ./templates/web;
-        description = "Web development environment";
+        description = "Web development environment.";
+      };
+
+      templates.node = {
+        path = ./templates/node;
+        description = "Node JS development environment.";
       };
     } // utils.lib.eachDefaultSystem (system: {
       devShell = import ./shell.nix { inherit system; pkgs = import nixpkgs { inherit system; }; };
