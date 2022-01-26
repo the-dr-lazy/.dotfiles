@@ -1431,8 +1431,8 @@ And why not pretty symbols?
       :int64 "Int64"
       :void "Void"
       :bool "Bool"
-      :true "True"
-      :false "False"
+      :true "true"
+      :false "false"
       :bottom "undefined"
       ;; Brand
       :monarch "Monarch")
