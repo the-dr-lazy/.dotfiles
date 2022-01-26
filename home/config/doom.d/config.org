@@ -1438,6 +1438,18 @@ And why not pretty symbols?
       :monarch "Monarch")
   (setq purescript-font-lock-prettify-symbols-alist (alist-get 'purescript-mode +ligatures-extra-alist)))
 #+end_src
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! format-all
+  :recipe (:host github :repo "lassik/emacs-format-all-the-code")
+  :pin "6200b91d9151b3177a676d30edd948266292bcc1")
+#+end_src
+
+I like ~purs-tidy~ as formatter.
+#+begin_src emacs-lisp
+(add-hook 'purescript-mode-hook #'format-all-mode)
+(setq-hook! 'purescript-mode-hook +format-with 'purs-tidy)
+#+end_src
 ** Dhall
 #+begin_src emacs-lisp
 (use-package! dhall-mode
