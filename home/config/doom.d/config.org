@@ -1621,7 +1621,7 @@ To improve =org-cite=.
 #+begin_src emacs-lisp :noweb-ref none :tangle packages.el
 (package! citeproc
   :pin "d6fd7534f0e4dba3f8af1b54461d72827b03ffd6")
-(package! bibtex-actions
+(package! citar 
   :pin "f6bce7c2868bde07cfd5441978a88c4f9a24e3c8")
 (package! org-cite-csl-activate
   :recipe (:host github :repo "andras-simonyi/org-cite-csl-activate")
