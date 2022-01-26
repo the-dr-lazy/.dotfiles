@@ -815,21 +815,6 @@ add package src directories to projectile. This isn't desirable in my opinion.
   "Return t if FILEPATH is within any of `projectile-ignored-projects'"
   (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
 #+end_src
-*** TRAMP
-Another lovely Emacs feature, TRAMP stands for /Transparent Remote Access,
-Multiple Protocol/. In brief, it's a lovely way to wander around outside your
-local filesystem.
-
-**** Prompt recognition
-Unfortunately, when connecting to remote machines Tramp can be a wee pit picky
-with the prompt format. Let's try to get Bash, and be a bit more permissive with
-prompt recognition.
-#+begin_src emacs-lisp
-(after! tramp
-  (setenv "SHELL" "/bin/bash")
-  (setq tramp-shell-prompt-pattern "\\(?:^\\|
-\\)[^]#$%>\n]*#?[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")) ;; default + 
-#+end_src
 *** Auto activating snippets
 Sometimes pressing =TAB= is just too much.
 #+begin_src emacs-lisp :tangle packages.el
