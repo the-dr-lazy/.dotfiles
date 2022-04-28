@@ -1,20 +1,20 @@
 [submodule "emacs"]
-  path = home/emacs.d
+	path = mac-mini/home/emacs.d
   url = https://github.com/hlissner/doom-emacs
   branch = develop
 [submodule "keyboard"]
-  path = home/keyboard
+	path = shared/keyboard
   url = https://github.com/the-dr-lazy/keyboard
   branch = master
 [submodule "gnupg"]
-  path = home/gnupg
+	path = shared/gnupg
   url = me@bitbucket/.gnupg.git
   branch = master
 [submodule "ssh"]
-  path = home/ssh
+	path = shared/ssh
   url = https://the-dr-lazy@bitbucket.org/the_dr_lazy/.ssh.git
   branch = master
 [submodule "private"]
-  path = home/private
+	path = shared/private
   url = me@bitbucket/private.git
   branch = master

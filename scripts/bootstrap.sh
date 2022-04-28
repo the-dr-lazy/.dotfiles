@@ -75,6 +75,10 @@ nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer 
 print_step "Clone .dotfiles repo."
 git clone "$DOTFILES_REPO_URL" "$DOTFILES"
 
+#######################################################
+### SSH
+###
+
 print_step "Initialize ssh submodule."
 initialize_submodule "home/ssh"
 
@@ -102,22 +106,8 @@ echo "$HOME/.nix-profile/bin/fish" | sudo tee -a /etc/shells
 chsh -s "$HOME/.nix-profile/bin/fish"
 
 #######################################################
-### Homebrew
-
-print_step "Let's install Homebrew."
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)";
-
-print_step "Make ~/.Brewfile symlink."
-ln -isv "$DOTFILES/home/Brewfile" "$HOME/Brewfile"
-
-print_step "Make ~/.Brewfile.lock.json symlink."
-ln -isv "$DOTFILES/home/Brewfile.lock.json" "$HOME/Brewfile.lock.json"
-
-print_step "Install Homebrew packages."
-brew bundle install --global --verbose
-
-#######################################################
 ### GnuPG
+###
 
 print_step "Initialize gnupg submodule."
 initialize_submodule "home/gnupg"
@@ -127,6 +117,7 @@ ln -isv "$DOTFILES/home/gnupg" "$HOME/.gnupg"
 
 #######################################################
 ### DOOM Emacs
+###
 
 print_step "Initialize emacs.d submodule."
 initialize_submodule "home/emacs.d"

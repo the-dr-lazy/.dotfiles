@@ -5,11 +5,11 @@ set PAGER less
 set LESS "-R"
 set DOTFILES "$HOME/Projects/github/the-dr-lazy/.dotfiles"
 set DOOM_DIR "$HOME/.doom.d"
-set LEDGER_FILE "$DOTFILES/home/org/books.ledger"
+set LEDGER_FILE "$DOTFILES/shared/private/books.ledger"
 
-if test -e $HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
-  set -x SSH_AUTH_SOCK $HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
-end
+set -gx HOMEBREW_PREFIX "/opt/homebrew";
+set -gx HOMEBREW_CELLAR "/opt/homebrew/Cellar";
+set -gx HOMEBREW_REPOSITORY "/opt/homebrew";
 
 ######################################################
 ## Profile
@@ -17,17 +17,21 @@ end
 status --is-login; and not set -q __fish_login_config_sourced
 and begin
 
-fish_add_path $DOTFILES/home/emacs.d/bin
-
-if test -e $HOME/.nix-profile/etc/profile.d/nix.sh
-  fenv source $HOME/.nix-profile/etc/profile.d/nix.sh
-end
+fish_add_path $HOME/.emacs.d/bin
 
 set -g __fish_login_config_sourced
 end
 
 direnv hook fish | source
 starship init fish | source
+
+set -q PATH; or set PATH ''; set -gx PATH "/opt/homebrew/bin" "/opt/homebrew/sbin" $PATH;
+set -q MANPATH; or set MANPATH ''; set -gx MANPATH "/opt/homebrew/share/man" $MANPATH;
+set -q INFOPATH; or set INFOPATH ''; set -gx INFOPATH "/opt/homebrew/share/info" $INFOPATH;
+
+if test -e $HOME/.nix-profile/etc/profile.d/nix.sh
+  fenv source $HOME/.nix-profile/etc/profile.d/nix.sh
+end
 
 ######################################################
 ## Tools

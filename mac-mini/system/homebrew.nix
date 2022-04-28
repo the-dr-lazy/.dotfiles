@@ -3,6 +3,7 @@
 {
   homebrew = {
     enable = true;
+    brewPrefix = "/opt/homebrew/bin";
     autoUpdate = true;
     cleanup = "zap";
     global.brewfile = true;
@@ -22,9 +23,7 @@
 
     # Basic stuff not available on Nix
     brews = [
-      "kowainik/tap/summoner-cli"
       "libvterm"
-      "pinentry-mac"
       "shared-mime-info"
       "dbus"
       "trash"
@@ -32,12 +31,13 @@
 
     casks = [
       "alacritty"
+      "android-file-transfer"
       "beekeeper-studio"
       "bitwarden"
       "discord"
       "docker"
       "dropbox"
-      "eloston-chromium"
+      # BROKEN "eloston-chromium"
       "firefox"
       "folx"
       "font-ibm-plex"
@@ -50,12 +50,11 @@
       "karabiner-elements"
       "macfuse"
       "maintenance"
-      "nordvpn"
+      "expressvpn"
       "openconnect-gui"
-      "openvpn-connect"
+      "parallels"
       "postico"
       "postman"
-      "skim"
       "skype"
       "steam"
       "telegram"
@@ -63,8 +62,7 @@
       "the-unarchiver"
       "visual-studio-code"
       "whatsapp"
-      # "android-file-transfer"
-      # "secretive"
+      "exodus"
     ];
 
     extraConfig = ''
