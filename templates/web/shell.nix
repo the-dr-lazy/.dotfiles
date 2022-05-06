@@ -7,8 +7,14 @@ pkgs.mkShell {
     ###################################################
     # Code styles:
     {
-      inherit (pkgs) pre-commit nixpkgs-fmt nix-linter shfmt shellcheck;
-      inherit (pkgs.python3Packages) pre-commit-hooks yamllint;
+      inherit (pkgs)
+        pre-commit
+        purs-tidy
+        nixpkgs-fmt
+        nix-linter
+        shfmt
+        shellcheck;
+      inherit (pkgs.unstable.python310Packages) pre-commit-hooks yamllint;
       inherit (pkgs.nodePackages) prettier;
 
       headroom = pkgs.haskell.lib.justStaticExecutables pkgs.haskellPackages.headroom;
@@ -16,7 +22,10 @@ pkgs.mkShell {
 
     ###################################################
     # Command line tools:
-    { inherit (pkgs) gitFull git-lfs; }
+    {
+      inherit (pkgs) cachix gitFull git-lfs;
+      inherit (pkgs.nodePackages) purescript-psa;
+    }
 
     ###################################################
     # Languages:
@@ -28,10 +37,11 @@ pkgs.mkShell {
     ###################################################
     # Language servers:
     {
-      inherit (pkgs) dhall-lsp-server;
+      inherit (pkgs)
+        dhall-lsp-server
+        purescript-language-server;
       inherit (pkgs.nodePackages)
         bash-language-server
-        purescript-language-server
         typescript-language-server
         vscode-html-languageserver-bin
         vscode-json-languageserver-bin
@@ -40,6 +50,9 @@ pkgs.mkShell {
 
     ###################################################
     # Package managers:
-    { inherit (pkgs) spago; }
+    {
+      inherit (pkgs) spago pulp;
+      inherit (pkgs.nodePackages) bower;
+    }
   ];
 }
