@@ -38,7 +38,7 @@
       "docker"
       "dropbox"
       # BROKEN "eloston-chromium"
-      "firefox"
+      "brave-browser"
       "folx"
       "font-ibm-plex"
       "font-juliamono"
