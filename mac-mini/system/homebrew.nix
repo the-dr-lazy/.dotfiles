@@ -34,6 +34,7 @@
       "android-file-transfer"
       "beekeeper-studio"
       "bitwarden"
+      "blender"
       "discord"
       "docker"
       "dropbox"
