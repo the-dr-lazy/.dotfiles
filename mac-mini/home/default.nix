@@ -41,7 +41,7 @@
       inherit (pkgs)
         automake
         cmake
-        coreutils
+        # coreutils
         curlFull
         diffutils
         fd
@@ -89,9 +89,10 @@
         lolcat
         starship
         youtube-dl
-        pinentry-emacs;
+        pinentry-emacs
+        xcpretty;
 
-      inherit (pkgs.nodePackages) prettier;
+      inherit (pkgs.nodePackages) zx;
     }
 
     ###################################################
@@ -113,7 +114,13 @@
     ###################################################
     # C
     {
-      inherit (pkgs) gcc llvm;
+      # inherit (pkgs) gcc llvm;
+    }
+
+    ###################################################
+    # Ruby
+    {
+      inherit (pkgs) ruby;
     }
 
     ###################################################
@@ -123,15 +130,28 @@
         delta
         editorconfig-core-c
         pywal
+        nodejs-16_x
         sqlite;
 
-      structured-haskell-mode = pkgs.haskell.lib.justStaticExecutables pkgs.haskellPackages.structured-haskell-mode;
-      text = pkgs.texlive.combine { inherit (pkgs.texlive) scheme-full; };
+      # structured-haskell-mode = pkgs.haskell.lib.justStaticExecutables pkgs.haskellPackages.structured-haskell-mode;
+      tex = pkgs.texlive.combine { inherit (pkgs.texlive) scheme-full; };
+
+      inherit (pkgs.nodePackages)
+        typescript-language-server
+        bash-language-server
+        vscode-langservers-extracted
+        vscode-css-languageserver-bin
+        yaml-language-server;
     }
 
     ###################################################
     # Vim
-    { inherit (pkgs) vim; }
+    # {
+    #   neovim = pkgs.neovim.override {
+    #     viAlias = true;
+    #     vimAlias = true;
+    #   };
+    # }
   ];
 
   home.file = {
@@ -156,30 +176,15 @@
     plugins = [
       {
         name = "bass";
-        src = pkgs.fetchFromGitHub {
-          owner = "edc";
-          repo = "bass";
-          rev = "refs/heads/master";
-          sha256 = "0mb01y1d0g8ilsr5m8a71j6xmqlyhf8w4xjf00wkk8k41cz3ypky";
-        };
+        src = pkgs.fish-plugins.bass;
       }
       {
         name = "foreign-env";
-        src = pkgs.fetchFromGitHub {
-          owner = "oh-my-fish";
-          repo = "plugin-foreign-env";
-          rev = "dddd9213272a0ab848d474d0cbde12ad034e65bc";
-          sha256 = "00xqlyl3lffc5l0viin1nyp819wf81fncqyz87jx8ljjdhilmgbs";
-        };
+        src = pkgs.fish-plugins.foreign-env;
       }
       {
         name = "bobthefish";
-        src = pkgs.fetchFromGitHub {
-          owner = "oh-my-fish";
-          repo = "theme-bobthefish";
-          rev = "626bd39b002535d69e56adba5b58a1060cfb6d7b";
-          sha256 = "06whihwk7cpyi3bxvvh3qqbd5560rknm88psrajvj7308slf0jfd";
-        };
+        src = pkgs.fish-plugins.bobthefish;
       }
     ];
     shellInit = builtins.readFile ../../shared/config/fish/config.fish;

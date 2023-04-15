@@ -18,43 +18,42 @@ in
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   # environment.darwinConfig = "$HOME/.nixpkgs/darwin.nix";
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowBroken = false;
-    allowUnsupportedSystem = false;
-  };
-
   # Auto upgrade nix package and the daemon service.
   nix = {
     package = pkgs.nixFlakes;
-    binaryCachePublicKeys = [
-      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-      "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
-      "the-dr-lazy.cachix.org-1:TI5TClLAkhXY4ACaTHO3/H1XUxuf85HBxz8AHlNVgHM="
-      "haskell-language-server.cachix.org-1:juFfHrwkOxqIOZShtC4YC1uT1bBcq2RSvC7OMKx0Nz8="
-    ];
-    binaryCaches = [
-      "https://hydra.iohk.io"
-      "https://iohk.cachix.org"
-      "https://the-dr-lazy.cachix.org"
-      "https://haskell-language-server.cachix.org"
-    ];
-    trustedUsers = [ "root" "@admin" ];
+    settings = {
+      substituters = [
+        "https://cache.iog.io"
+        "https://iohk.cachix.org"
+        "https://the-dr-lazy.cachix.org"
+        "https://haskell-language-server.cachix.org"
+        "https://cache.ngi0.nixos.org"
+      ];
+      trusted-public-keys = [
+        "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+        "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+        "the-dr-lazy.cachix.org-1:TI5TClLAkhXY4ACaTHO3/H1XUxuf85HBxz8AHlNVgHM="
+        "haskell-language-server.cachix.org-1:juFfHrwkOxqIOZShtC4YC1uT1bBcq2RSvC7OMKx0Nz8="
+        "cache.ngi0.nixos.org-1:KqH5CBLNSyX184S9BKZJo1LxrxJ9ltnY2uAs5c/f1MA="
+      ];
+      trusted-users = [ "root" "@admin" ];
+    };
     gc.automatic = true;
     gc.user = primaryUser;
     extraOptions = ''
       keep-outputs = true
       keep-derivations = true
 
-      experimental-features = nix-command flakes
+      experimental-features = nix-command flakes ca-derivations
     '';
     useDaemon = true;
   };
 
   programs.fish.enable = true;
+  programs.zsh.enable = true;
   environment.shells = [ pkgs.fish ];
 
-  services.nix-daemon.enable = false;
+  services.nix-daemon.enable = true;
 
   # `home-manager`
   users.users.${primaryUser}.home = "/Users/the-dr-lazy";

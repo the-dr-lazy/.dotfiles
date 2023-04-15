@@ -1,0 +1,73 @@
+.mac {
+  font-family: VictorMono Nerd Font, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+}
+
+.monaco-hover[role="tooltip"] {
+  /* top: calc(35px + 21px + 21px) !important; */
+  /* right: 21px !important; */
+  /* left: unset !important; */
+
+  padding: 5px !important;
+  border: 1.5px solid rgb(0 0 0) !important;
+
+  background-color: rgb(27, 29, 44, 0.7) !important;
+  backdrop-filter: blur(8px) contrast(1.2) brightness(1.5) !important;
+  box-shadow: 0 21px 34px -13px rgb(0 0 0 / 60%) !important;
+}
+
+.monaco-hover .hover-row:not(:first-child):not(:empty) {
+  border-top: 1px solid rgb(99, 104, 148, 0.5) !important;
+  margin-top: 8px !important;
+}
+
+.parameter-hints-widget {
+  padding: 5px !important;
+  border: 1.5px solid rgb(0 0 0) !important;
+
+  background-color: rgb(27, 29, 44, 0.7) !important;
+  backdrop-filter: blur(8px) contrast(1.2) brightness(1.5) !important;
+  box-shadow: 0 21px 34px -13px rgb(0 0 0 / 60%) !important;
+}
+
+.quick-input-widget {
+  top: 50% !important;
+
+  padding: 8px 13px;
+  border: 1.5px solid rgb(0 0 0) !important;
+  border-radius: 8px;
+
+  transform: translateY(-50%);
+
+  background-color: rgb(27 29 44 / 70%) !important;
+  backdrop-filter: blur(8px) contrast(1.2) brightness(1.5) !important;
+  box-shadow: 0 21px 34px -13px rgb(0 0 0 / 60%) !important;
+}
+
+.quick-input-titlebar {
+  background-color: transparent !important;
+}
+
+.quick-input-widget .quick-input-titlebar .codicon {
+  color: #c099ff !important;
+  font-size: 13px !important;
+}
+
+.quick-input-widget .quick-input-header {
+  padding: 0;
+  margin-bottom: 13px;
+  margin-top: 13px;
+}
+
+.quick-input-widget .monaco-list-rows {
+  background-color: transparent !important;
+
+  font-weight: 500 !important;
+}
+
+.quick-input-widget .monaco-list-rows .codicon {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.monaco-list-row.focused {
+}

@@ -110,3 +110,5 @@ result
 
 *.el
 !custom.el
+
+.log

@@ -6,6 +6,7 @@ set LESS "-R"
 set DOTFILES "$HOME/Projects/github/the-dr-lazy/.dotfiles"
 set DOOM_DIR "$HOME/.doom.d"
 set LEDGER_FILE "$DOTFILES/shared/private/books.ledger"
+set ANDROID_HOME "$HOME/Library/Android/sdk"
 
 set -gx HOMEBREW_PREFIX "/opt/homebrew";
 set -gx HOMEBREW_CELLAR "/opt/homebrew/Cellar";
@@ -18,6 +19,8 @@ status --is-login; and not set -q __fish_login_config_sourced
 and begin
 
 fish_add_path $HOME/.emacs.d/bin
+fish_add_path $ANDROID_HOME/emulator
+fish_add_path $ANDROID_HOME/platform-tools
 
 set -g __fish_login_config_sourced
 end
@@ -29,6 +32,9 @@ set -q PATH; or set PATH ''; set -gx PATH "/opt/homebrew/bin" "/opt/homebrew/sbi
 set -q MANPATH; or set MANPATH ''; set -gx MANPATH "/opt/homebrew/share/man" $MANPATH;
 set -q INFOPATH; or set INFOPATH ''; set -gx INFOPATH "/opt/homebrew/share/info" $INFOPATH;
 
+set -gx LC_CTYPE en_US.UTF-8
+set -gx LC_ALL en_US.UTF-8
+
 if test -e $HOME/.nix-profile/etc/profile.d/nix.sh
   fenv source $HOME/.nix-profile/etc/profile.d/nix.sh
 end
@@ -37,7 +43,7 @@ end
 ## Tools
 
 function rebuild
-  env -C $HOME darwin-rebuild switch --flake $DOTFILES
+  genv -C $HOME darwin-rebuild switch --flake $DOTFILES
   rm -rf $HOME/result
 end
 

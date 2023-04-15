@@ -4,10 +4,10 @@
   homebrew = {
     enable = true;
     brewPrefix = "/opt/homebrew/bin";
-    autoUpdate = true;
-    cleanup = "zap";
+    onActivation = {
+      cleanup = "zap";
+    };
     global.brewfile = true;
-    global.noLock = true;
 
     taps = [
       "d12frosted/emacs-plus"
@@ -23,10 +23,12 @@
 
     # Basic stuff not available on Nix
     brews = [
+      "cocoapods"
+      "dbus"
       "libvterm"
       "shared-mime-info"
-      "dbus"
       "trash"
+      "watchman"
     ];
 
     casks = [
@@ -34,26 +36,27 @@
       "android-file-transfer"
       "beekeeper-studio"
       "bitwarden"
-      "blender"
+      "brave-browser"
+      "dash"
       "discord"
       "docker"
       "dropbox"
-      # BROKEN "eloston-chromium"
-      "brave-browser"
+      "expressvpn"
       "folx"
       "font-ibm-plex"
       "font-juliamono"
       "font-overpass"
       "font-victor-mono-nerd-font"
       "fontbase"
+      "gitkraken"
       "hammerspoon"
       "iina"
       "karabiner-elements"
+      "languagetool"
       "macfuse"
       "maintenance"
-      "expressvpn"
+      "obsidian"
       "openconnect-gui"
-      "parallels"
       "postico"
       "postman"
       "skype"
@@ -61,13 +64,16 @@
       "telegram"
       "the-dr-lazy/tap/sketch"
       "the-unarchiver"
-      "visual-studio-code"
+      "webtorrent"
       "whatsapp"
-      "exodus"
+      "zotero"
+      "zulu11"
+      # "openvpn-connect"
     ];
 
     extraConfig = ''
-      brew "d12frosted/emacs-plus/emacs-plus@28", args: ["with-ctags", "with-dbus", "with-elrumo1-icon", "with-mailutils", "with-xwidgets"]
+      brew "libgccjit", args: ["build-from-source"]
+      brew "d12frosted/emacs-plus/emacs-plus@28", args: ["with-elrumo1-icon", "with-no-frame-refocus", "with-xwidgets", "with-imagemagick", "with-native-comp"]
     '';
   };
 }

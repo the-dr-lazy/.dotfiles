@@ -1,0 +1,7 @@
+# key: /tagged
+# name: tagged
+# --
+
+export interface $1 extends Tagged<"$1"> {}
+export const $1: $1 = { _tag: "$1" }
+export const is$1 = (value: $2): value is $1 => value._tag === "$1"

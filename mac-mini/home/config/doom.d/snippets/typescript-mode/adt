@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: ADT
+# key: /adt
+# --
+
+export type ${1:Name} = $0
+
+export namespace $1 {
+
+}

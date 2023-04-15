@@ -8,7 +8,7 @@ pkgs.mkShell {
     # Code styles:
     {
       inherit (pkgs) pre-commit nixpkgs-fmt nix-linter shfmt shellcheck;
-      inherit (pkgs.unstable.python310Packages) pre-commit-hooks yamllint;
+      inherit (pkgs.python310Packages) pre-commit-hooks yamllint;
       inherit (pkgs.nodePackages) prettier;
     }
 
