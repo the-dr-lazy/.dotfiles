@@ -551,6 +551,35 @@ Columnar indent guides are so helpful; Let's use it.
 #+begin_src emacs-lisp
 (setq highlight-indent-guides-method 'column)
 #+end_src
+** Highlight ToDos
+#+begin_src emacs-lisp
+(after! hl-todo
+(setq hl-todo-keyword-faces '(("ToDo" warning bold)
+("TODO" warning bold)
+
+("Note" success bold)
+("NOTE" success bold)
+
+("See Note" markdown-url-face)
+("SEE NOTE" markdown-url-face)
+
+("Hack" font-lock-constant-face bold)
+("HACK" font-lock-constant-face bold)
+
+("FIXME" error bold)
+
+("Deprecated" font-lock-doc-face bold)
+("DEPRECATED" font-lock-doc-face bold)
+
+("Bug" error bold)
+("BUG" error bold)
+
+("XXX+" font-lock-constant-face bold))))
+#+end_src
+** YASnippet
+#+begin_src emacs-lisp
+(setq yas-triggers-in-field t)
+#+end_src
 ** GPG
 #+begin_src emacs-lisp :tangle packages.el
 (package! pinentry)
@@ -655,6 +684,17 @@ tsx-mode
 solidity-mode)
 :when (locate-dominating-file default-directory "package.json")
 :add-hooks '(+javascript-add-npm-path-h npm-mode))
+#+end_src
+** Haskell
+#+begin_src emacs-lisp
+(use-package! lsp-haskell
+  :config
+  (setq lsp-haskell-server-path "haskell-language-server-wrapper"
+        lsp-haskell-liquid-on t
+        lsp-haskell-formatting-provider "stylish-haskell"))
+
+(after! projectile
+  (add-to-list 'projectile-project-root-files "cabal.project"))
 #+end_src
 ** Unpins
 #+begin_src emacs-lisp :tangle packages.el

@@ -35,9 +35,9 @@
           (import ./mac-book-air/system)
         ];
       };
-      macMini = darwin.lib.darwinSystem {
+      macMini = let system = "aarch64-darwin"; in darwin.lib.darwinSystem {
         pkgs = import nixpkgs-unstable {
-          system = "aarch64-darwin";
+          inherit system;
           overlays = [
             (_: _: {
               fish-plugins = {
@@ -53,7 +53,7 @@
             allowUnsupportedSystem = false;
           };
         };
-        system = "aarch64-darwin";
+        inherit system;
         modules = [
           home-manager.darwinModules.home-manager
           (import ./mac-mini/system)

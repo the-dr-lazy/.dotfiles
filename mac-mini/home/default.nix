@@ -36,6 +36,18 @@
     }
 
     ###################################################
+    # Haskell:
+    {
+      ghc = pkgs.haskell.compiler.ghc96;
+
+      inherit (pkgs)
+        cabal-install
+        haskell-language-server
+        hlint
+        stylish-haskell;
+    }
+
+    ###################################################
     # Basic GNU uitls:
     {
       inherit (pkgs)
