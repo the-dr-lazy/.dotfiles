@@ -32,6 +32,7 @@
     ];
 
     casks = [
+      "airdroid"
       "alacritty"
       "android-file-transfer"
       "beekeeper-studio"
@@ -68,6 +69,7 @@
       "whatsapp"
       "zotero"
       "zulu11"
+      "utm"
       # "openvpn-connect"
     ];
 

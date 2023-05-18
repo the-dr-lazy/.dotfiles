@@ -38,12 +38,13 @@
     ###################################################
     # Haskell:
     {
-      ghc = pkgs.haskell.compiler.ghc96;
+      ghc = pkgs.haskell.compiler.ghc927;
 
       inherit (pkgs)
-        cabal-install
         haskell-language-server
+        cabal-install
         hlint
+        ghcid
         stylish-haskell;
     }
 
