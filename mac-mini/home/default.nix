@@ -38,10 +38,17 @@
     ###################################################
     # Haskell:
     {
-      ghc = pkgs.haskell.compiler.ghc927;
+      ghc = pkgs.unstable.haskell.compiler.ghc984;
+
+      # Failed to heat cache...
+      #
+      # haskell-language-server = pkgs.haskell-language-server.override {
+      #    supportedGhcVersions = [ "966" ];
+      # };
+
+      llvm = pkgs.llvmPackages_15.llvm;
 
       inherit (pkgs)
-        haskell-language-server
         cabal-install
         hlint
         ghcid
@@ -54,19 +61,17 @@
       inherit (pkgs)
         automake
         cmake
-        # coreutils
-        curlFull
+        coreutils-prefixed
         diffutils
+        findutils
+        curlFull
         fd
         file
-        findutils
         gawk
-        glib
+        # glib
         gnumake
-        gnupg
         less
-        libtool
-        mailutils
+        # libtool
         watch
         wget;
     }
@@ -76,15 +81,11 @@
     {
       inherit (pkgs)
         act
-        bindfs
         cloc
         colordiff
         direnv
-        docker-compose
-        entr
         git
         harfbuzz
-        hledger
         jq
         ledger
         m-cli
@@ -101,9 +102,11 @@
         cowsay
         lolcat
         starship
-        youtube-dl
-        pinentry-emacs
-        xcpretty;
+        yt-dlp 
+        xcpretty
+        imagemagick
+        inetutils
+        parallel-full;
 
       inherit (pkgs.nodePackages) zx;
     }
@@ -116,15 +119,6 @@
     }
 
     ###################################################
-    # Cryptography
-    {
-      inherit (pkgs)
-        bitwarden-cli
-        openssh
-        openssl;
-    }
-
-    ###################################################
     # C
     {
       # inherit (pkgs) gcc llvm;
@@ -133,43 +127,43 @@
     ###################################################
     # Ruby
     {
-      inherit (pkgs) ruby;
+      # inherit (pkgs) ruby;
+    }
+
+
+    ###################################################
+    # Android
+    {
+      inherit (pkgs) scrcpy;
     }
 
     ###################################################
     # Emacs
     {
       inherit (pkgs)
+        emacs-lsp-booster
         delta
         editorconfig-core-c
         pywal
-        nodejs-16_x
-        sqlite;
+        nodejs_22
+        sqlite
+        tailwindcss-language-server;
 
-      # structured-haskell-mode = pkgs.haskell.lib.justStaticExecutables pkgs.haskellPackages.structured-haskell-mode;
-      tex = pkgs.texlive.combine { inherit (pkgs.texlive) scheme-full; };
+      # tex = pkgs.texlive.combine { inherit (pkgs.texlive) scheme-full; };
 
       inherit (pkgs.nodePackages)
         typescript-language-server
+        typescript
         bash-language-server
         vscode-langservers-extracted
-        vscode-css-languageserver-bin
         yaml-language-server;
-    }
 
-    ###################################################
-    # Vim
-    # {
-    #   neovim = pkgs.neovim.override {
-    #     viAlias = true;
-    #     vimAlias = true;
-    #   };
-    # }
+    }
   ];
 
   home.file = {
     ".config/starship.toml".source = ../../shared/config/starship.toml;
-    ".alacritty.yml".source = ../../shared/config/alacritty.yml;
+    ".alacritty.toml".source = ../../shared/config/alacritty.toml;
     ".sqitch/sqitch.conf".source = ../../shared/config/sqitch/config.ini;
     ".gitconfig".source = ../../shared/config/gitconfig.ini;
     ".gitignore".source = ../../shared/config/global.gitignore;

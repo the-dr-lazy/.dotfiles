@@ -12,10 +12,8 @@
     taps = [
       "d12frosted/emacs-plus"
       "homebrew/bundle"
-      "homebrew/cask"
       "homebrew/cask-fonts"
       "homebrew/cask-versions"
-      "homebrew/core"
       "homebrew/services"
       "kowainik/tap"
       "the-dr-lazy/tap"
@@ -25,24 +23,25 @@
     brews = [
       "cocoapods"
       "dbus"
+      "gcc"
+      "gnupg"
+      "ios-deploy"
       "libvterm"
+      "pinentry-mac"
       "shared-mime-info"
       "trash"
       "watchman"
     ];
 
     casks = [
-      "airdroid"
       "alacritty"
-      "android-file-transfer"
       "beekeeper-studio"
       "bitwarden"
       "brave-browser"
+      "cyberduck"
       "dash"
       "discord"
-      "docker"
       "dropbox"
-      "expressvpn"
       "folx"
       "font-ibm-plex"
       "font-juliamono"
@@ -50,32 +49,36 @@
       "font-victor-mono-nerd-font"
       "fontbase"
       "gitkraken"
+      "google-drive"
       "hammerspoon"
       "iina"
       "karabiner-elements"
       "languagetool"
       "macfuse"
-      "maintenance"
+      "ngrok/ngrok/ngrok"
       "obsidian"
+      "onyx"
       "openconnect-gui"
+      "orbstack"
       "postico"
       "postman"
+      "rstudio"
       "skype"
       "steam"
       "telegram"
       "the-dr-lazy/tap/sketch"
       "the-unarchiver"
+      "utm"
       "webtorrent"
       "whatsapp"
+      "wireshark"
       "zotero"
-      "zulu11"
-      "utm"
-      # "openvpn-connect"
+      # "maintenance"
     ];
 
     extraConfig = ''
       brew "libgccjit", args: ["build-from-source"]
-      brew "d12frosted/emacs-plus/emacs-plus@28", args: ["with-elrumo1-icon", "with-no-frame-refocus", "with-xwidgets", "with-imagemagick", "with-native-comp"]
+      brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-elrumo1-icon", "with-poll", "with-imagemagick", "with-native-comp"]   
     '';
   };
 }

@@ -112,3 +112,6 @@ result
 !custom.el
 
 .log
+
+shared/gnupg
+shared/ssh

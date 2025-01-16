@@ -1,17 +1,26 @@
 {
   description = "amygdala :: ∀ a. a → IO Memory's Systems";
 
+  nixConfig = {
+    extra-substituters = [
+      "https://haskell-language-server.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "haskell-language-server.cachix.org-1:juFfHrwkOxqIOZShtC4YC1uT1bBcq2RSvC7OMKx0Nz8="
+    ];
+  };
+
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     utils.url = "github:numtide/flake-utils";
     home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
       url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     fish-bass = {
       url = "github:edc/bass";
@@ -36,10 +45,11 @@
         ];
       };
       macMini = let system = "aarch64-darwin"; in darwin.lib.darwinSystem {
-        pkgs = import nixpkgs-unstable {
+        pkgs = import nixpkgs {
           inherit system;
           overlays = [
             (_: _: {
+              unstable = import nixpkgs-unstable { inherit system; };
               fish-plugins = {
                 bass = fish-bass;
                 foreign-env = fish-foreign-env;
@@ -51,6 +61,9 @@
             allowUnfree = true;
             allowBroken = false;
             allowUnsupportedSystem = false;
+            permittedInsecurePackages = [
+              "nodejs-16.20.2"
+            ];
           };
         };
         inherit system;

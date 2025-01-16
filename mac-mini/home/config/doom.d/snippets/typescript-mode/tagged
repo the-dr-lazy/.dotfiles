@@ -1,5 +1,6 @@
-# key: /tagged
+# -*- mode: snippet -*-
 # name: tagged
+# key: /tagged
 # --
 
 export interface $1 extends Tagged<"$1"> {}

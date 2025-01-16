@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: ptagged
-# key: /ptagged
-# --
-export interface $1 extends Tagged<"$1"> {
-  $0
-}
-export const $1 = (spec: Untagged<$1>): $1 => ({ ...spec, _tag: "$1" })
-export const is$1 = (value: $2): value is $1 => value._tag === "$1"

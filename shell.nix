@@ -7,7 +7,12 @@ pkgs.mkShell {
     ###################################################
     # Code styles:
     {
-      inherit (pkgs) pre-commit nixpkgs-fmt nix-linter shfmt shellcheck;
+      inherit (pkgs)
+        pre-commit
+        nixpkgs-fmt
+        # nix-linter
+        shfmt
+        shellcheck;
       inherit (pkgs.python310Packages) pre-commit-hooks yamllint;
       inherit (pkgs.nodePackages) prettier;
     }
@@ -21,7 +26,7 @@ pkgs.mkShell {
     {
       inherit (pkgs.nodePackages)
         bash-language-server
-        vscode-json-languageserver-bin
+        vscode-langservers-extracted
         yaml-language-server;
     }
   ];

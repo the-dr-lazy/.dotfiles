@@ -6,14 +6,6 @@
 	path = shared/keyboard
   url = https://github.com/the-dr-lazy/keyboard
   branch = master
-[submodule "gnupg"]
-	path = shared/gnupg
-  url = me@bitbucket/.gnupg.git
-  branch = master
-[submodule "ssh"]
-	path = shared/ssh
-  url = https://the-dr-lazy@bitbucket.org/the_dr_lazy/.ssh.git
-  branch = master
 [submodule "private"]
 	path = shared/private
   url = me@bitbucket/private.git

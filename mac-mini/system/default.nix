@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 let
   primaryUser = "the-dr-lazy";
@@ -20,7 +20,7 @@ in
 
   # Auto upgrade nix package and the daemon service.
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     settings = {
       substituters = [
         "https://cache.iog.io"
@@ -49,7 +49,22 @@ in
     useDaemon = true;
   };
 
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+
+    loginShellInit =
+      let
+        # This naive quoting is good enough in this case. There shouldn't be any
+        # double quotes in the input string, and it needs to be double quoted in case
+        # it contains a space (which is unlikely!)
+        dquote = str: "\"" + str + "\"";
+
+        makeBinPathList = map (path: path + "/bin");
+      in ''
+        fish_add_path --move --prepend --path ${lib.concatMapStringsSep " " dquote (makeBinPathList config.environment.profiles)}
+        set fish_user_paths $fish_user_paths
+      '';
+  };
   programs.zsh.enable = true;
   environment.shells = [ pkgs.fish ];
 
@@ -60,20 +75,4 @@ in
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.${primaryUser} = import ../home;
-
-  # Hack: There is an issue with order of PATHs. The nix profile bin PATH comes too late!
-  # See https://github.com/LnL7/nix-darwin/issues/122
-  environment.etc."fish/nixos-env-preinit.fish".text = lib.mkMerge [
-    (lib.mkBefore ''
-      set -l oldPath $PATH
-    '')
-    (lib.mkAfter ''
-      for elt in $PATH
-        if not contains -- $elt $oldPath /usr/local/bin /usr/bin /bin /usr/sbin /sbin
-          set -ag fish_user_paths $elt
-        end
-      end
-      set -el oldPath
-    '')
-  ];
 }
